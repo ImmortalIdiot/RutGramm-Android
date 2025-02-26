@@ -54,9 +54,9 @@ fun StubScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.width(paddingBetweenButtons))
-
             if (secondButtonText.isNotEmpty()) {
+                Spacer(modifier = Modifier.width(paddingBetweenButtons))
+
                 Button(
                     modifier = Modifier.width(buttonWidth),
                     onClick = secondButtonOnClick
