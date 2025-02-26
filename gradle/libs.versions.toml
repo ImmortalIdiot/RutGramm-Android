@@ -14,6 +14,7 @@ koinAndroid = "4.1.0-Beta5"
 koinAndroidxCompose = "4.1.0-Beta5"
 koinKtor = "4.1.0-Beta5"
 ktor = "3.1.0"
+voyager = "1.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,6 +44,9 @@ koin-ktor = { group = "io.insert-koin", name = "koin-ktor", version.ref = "koinK
 
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor"}
 ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+
+voyager-navigator = { group = "cafe.adriel.voyager", name = "voyager-navigator", version.ref = "voyager" }
+voyager-transitions = { group = "cafe.adriel.voyager", name = "voyager-transitions", version.ref = "voyager" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
