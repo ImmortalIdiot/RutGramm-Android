@@ -201,7 +201,7 @@ private fun SignUpScreenComposable(
         ) {
             Button(
                 modifier = Modifier
-                    .width(160.dp)
+                    .width(296.dp)
                     .height(48.dp),
                 onClick = {
                     viewModel.register(
