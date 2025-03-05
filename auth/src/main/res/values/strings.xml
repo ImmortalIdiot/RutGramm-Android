@@ -1,0 +1,12 @@
+<resources>
+    <string name="login_screen">Login Screen</string>
+    <string name="login_field">Login/Email</string>
+    <string name="password_field">Password</string>
+    <string name="login">Login</string>
+
+    <string name="to_register">To sign up</string>
+    <string name="to_reset_password">To reset password</string>
+
+    <string name="empty_login">Login field must be not empty</string>
+    <string name="empty_password">Password field must be not empty</string>
+</resources>

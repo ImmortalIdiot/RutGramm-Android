@@ -1,0 +1,12 @@
+<resources>
+    <string name="login_screen">Авторизация</string>
+    <string name="login_field">Логин/Почта</string>
+    <string name="password_field">Пароль</string>
+    <string name="login">Войти</string>
+
+    <string name="to_register">Зарегистрироваться</string>
+    <string name="to_reset_password">Восстановить пароль</string>
+
+    <string name="empty_login">Поле логина не должно быть пустым</string>
+    <string name="empty_password">Поле пароля не должно быть пустым</string>
+</resources>

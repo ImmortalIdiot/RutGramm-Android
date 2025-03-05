@@ -34,4 +34,8 @@ dependencies {
 
     implementation(libs.voyager.navigator)
     implementation(libs.voyager.transitions)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 }

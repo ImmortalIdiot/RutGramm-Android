@@ -41,5 +41,5 @@ dependencies {
     api(libs.androidx.ui.graphics)
     api(libs.androidx.ui.tooling)
     api(libs.androidx.material3)
-    implementation(libs.androidx.material.icons.extended)
+    api(libs.androidx.material.icons.extended)
 }
