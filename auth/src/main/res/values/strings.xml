@@ -1,11 +1,11 @@
 <resources>
-    <string name="login_screen">Login Screen</string> <!-- change to 'Sign in Screen' -->
+    <string name="sign_in_screen">Sign in Screen</string>
     <string name="login_or_email_field">Login/Email</string>
     <string name="login_field">Login</string>
     <string name="email_field">Email</string>
     <string name="password_field">Password</string>
     <string name="confirm_password_field">Confirm password</string>
-    <string name="login">Login</string> <!-- change to 'Sign In'-->
+    <string name="sign_in">Sign In</string>
 
     <string name="to_register">To sign up</string>
     <string name="to_reset_password">To reset password</string>
@@ -16,7 +16,7 @@
     <string name="invalid_email">Invalid email</string>
     <string name="confirm_password_error">Passwords are not equals</string>
 
-    <string name="signup_screen">Sign up Screen</string>
-    <string name="signup">Sign Up</string>
+    <string name="sign_up_screen">Sign up Screen</string>
+    <string name="sign_up">Sign Up</string>
     <string name="to_sign_in">To sign in</string>
 </resources>

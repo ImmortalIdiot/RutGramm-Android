@@ -89,7 +89,7 @@ private fun LoginScreenComposable(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 64.dp),
-            text = context.getString(R.string.login_screen),
+            text = context.getString(R.string.sign_in_screen),
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -104,7 +104,7 @@ private fun LoginScreenComposable(
                     viewModel.changeLogin(newValue = newLogin)
                 },
                 label = {
-                    Text(text = context.getString(R.string.login_field))
+                    Text(text = context.getString(R.string.login_or_email_field))
                 },
                 maxLines = 1,
                 singleLine = true,
@@ -171,7 +171,7 @@ private fun LoginScreenComposable(
                 }
             ) {
                 Text(
-                    text = context.getString(R.string.login),
+                    text = context.getString(R.string.sign_in),
                     style = MaterialTheme.typography.headlineSmall
                 )
             }

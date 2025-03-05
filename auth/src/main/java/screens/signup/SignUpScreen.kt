@@ -97,7 +97,7 @@ private fun SignUpScreenComposable(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 64.dp),
-            text = context.getString(R.string.signup_screen),
+            text = context.getString(R.string.sign_up_screen),
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -214,7 +214,7 @@ private fun SignUpScreenComposable(
                 }
             ) {
                 Text(
-                    text = context.getString(R.string.login),
+                    text = context.getString(R.string.sign_up),
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
