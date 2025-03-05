@@ -1,7 +1,10 @@
 <resources>
     <string name="login_screen">Авторизация</string>
-    <string name="login_field">Логин/Почта</string>
+    <string name="login_or_email_field">Логин/Почта</string>
+    <string name="login_field">Логин</string>
+    <string name="email_field">Почта</string>
     <string name="password_field">Пароль</string>
+    <string name="confirm_password_field">Повторите пароль</string>
     <string name="login">Войти</string>
 
     <string name="to_register">Зарегистрироваться</string>
@@ -9,4 +12,11 @@
 
     <string name="empty_login">Поле логина не должно быть пустым</string>
     <string name="empty_password">Поле пароля не должно быть пустым</string>
+    <string name="empty_email">Поле email не должно быть пустым</string>
+    <string name="invalid_email">Некорректный email</string>
+    <string name="confirm_password_error">Пароли не совпадают</string>
+
+    <string name="signup_screen">Регистрация</string>
+    <string name="signup">Зарегистрироваться</string>
+    <string name="to_sign_in">Есть аккаунт? Войти</string>
 </resources>
