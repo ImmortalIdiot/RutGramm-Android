@@ -5,6 +5,9 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
+import domain.AuthData
+import domain.AuthStore
+import domain.models.login.LoginResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -45,10 +48,19 @@ internal class LoginScreenViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            val result = authenticate(login, password) // TODO: save access and refresh tokens asynchronously
+            val result: Result<LoginResponse> = authenticate(login, password)
 
             _uiState.value = when {
-                result.isSuccess -> LoginScreenUiState.Success
+                result.isSuccess -> {
+                    val authData = AuthData(
+                        result.getOrNull()!!.userId,
+                        result.getOrNull()!!.accessToken,
+                        result.getOrNull()!!.refreshToken
+                    )
+                    AuthStore.saveAuthData(context = context, data = authData)
+                    LoginScreenUiState.Success
+                }
+
                 else -> LoginScreenUiState.Error(context.getString(R.string.server_error))
             }
         }
