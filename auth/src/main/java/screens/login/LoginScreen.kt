@@ -98,8 +98,8 @@ private fun LoginScreenComposable(
         if (uiState is LoginScreenUiState.Error) {
             TopSnackbar(
                 snackbarHostState = snackbarHostState,
-                contentColor = MaterialTheme.colorScheme.onError,
-                containerColor = MaterialTheme.colorScheme.onErrorContainer
+                contentColor = MaterialTheme.colorScheme.error,
+                containerColor = MaterialTheme.colorScheme.errorContainer
             )
         }
 
