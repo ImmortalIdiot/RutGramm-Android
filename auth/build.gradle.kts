@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 android {
@@ -15,6 +16,18 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            buildConfigField(
+                "String",
+                "AUTH_URL",
+                "\"http://localhost:8080/auth/\""
+            )
+        }
+        debug {
+            buildConfigField(
+                "String",
+                "AUTH_URL",
+                "\"http://localhost:8080/auth/\""
+            )
         }
     }
     compileOptions {
@@ -26,6 +39,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -38,4 +52,11 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.json)
+
+    implementation(libs.kotlinx.serialization)
 }

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import network.login.authenticate
 
 internal class LoginScreenViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<LoginScreenUiState>(LoginScreenUiState.Init)
@@ -43,9 +44,14 @@ internal class LoginScreenViewModel : ViewModel() {
             return
         }
 
-        // TODO: add login request
+        viewModelScope.launch {
+            val result = authenticate(login, password) // TODO: save access and refresh tokens asynchronously
 
-        _uiState.value = LoginScreenUiState.Success
+            _uiState.value = when {
+                result.isSuccess -> LoginScreenUiState.Success
+                else -> LoginScreenUiState.Error(context.getString(R.string.server_error))
+            }
+        }
     }
 
     private fun validateInputs(first: String, second: String, context: Context): Boolean {

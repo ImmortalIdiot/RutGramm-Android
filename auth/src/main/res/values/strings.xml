@@ -19,4 +19,7 @@
     <string name="sign_up_screen">Sign up Screen</string>
     <string name="sign_up">Sign Up</string>
     <string name="to_sign_in">To sign in</string>
+
+    <string name="smth_went_wrong_error">Something went wrong</string>
+    <string name="server_error">An error occurred on the server. Try again later</string>
 </resources>

@@ -19,4 +19,7 @@
     <string name="sign_up_screen">Регистрация</string>
     <string name="sign_up">Зарегистрироваться</string>
     <string name="to_sign_in">Есть аккаунт? Войти</string>
+
+    <string name="smth_went_wrong_error">Что-то пошло не так</string>
+    <string name="server_error">На сервере возникла ошибка. Попробуйте позднее</string>
 </resources>
