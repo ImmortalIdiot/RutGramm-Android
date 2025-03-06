@@ -6,6 +6,8 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
+import domain.AuthData
+import domain.AuthStore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -73,7 +75,23 @@ internal class SignUpScreenViewModel : ViewModel() {
             return
         }
 
-        // TODO: add sign up request
+        viewModelScope.launch {
+            val result = network.registration.register(login, email, password)
+
+            _uiState.value = when {
+                result.isSuccess -> {
+                    val authData = AuthData(
+                        result.getOrNull()!!.userId,
+                        result.getOrNull()!!.accessToken,
+                        result.getOrNull()!!.refreshToken
+                    )
+                    AuthStore.saveAuthData(context = context, data = authData)
+                    SignUpScreenUiState.Success
+                }
+
+                else -> SignUpScreenUiState.Error(context.getString(R.string.server_error))
+            }
+        }
 
         viewModelScope.launch {
             _uiState.value = SignUpScreenUiState.Success

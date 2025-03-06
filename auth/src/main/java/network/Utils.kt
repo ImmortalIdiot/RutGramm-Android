@@ -20,4 +20,5 @@ internal val client = HttpClient {
 
 internal object Auth {
     const val LOGIN_URL = BuildConfig.AUTH_URL + "login"
+    const val REGISTER_URL = BuildConfig.AUTH_URL + "register"
 }

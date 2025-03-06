@@ -76,6 +76,10 @@ private fun SignUpScreenComposable(
             val snackbarMessage = (uiState as SignUpScreenUiState.Error).errorMessage
             snackbarHostState.showMessage(message = snackbarMessage)
         }
+
+        if (uiState is SignUpScreenUiState.Success) {
+            snackbarHostState.showMessage(message = context.getString(R.string.successful_signup))
+        }
     }
 
     DisposableEffect(Unit) {
@@ -91,7 +95,17 @@ private fun SignUpScreenComposable(
             .padding(vertical = 64.dp),
         contentAlignment = Alignment.Center
     ) {
-        TopSnackbar(snackbarHostState = snackbarHostState)
+        if (uiState is SignUpScreenUiState.Error) {
+            TopSnackbar(
+                snackbarHostState = snackbarHostState,
+                contentColor = MaterialTheme.colorScheme.error,
+                containerColor = MaterialTheme.colorScheme.errorContainer
+            )
+        }
+
+        if (uiState is SignUpScreenUiState.Success) {
+            TopSnackbar(snackbarHostState = snackbarHostState)
+        }
 
         Text(
             modifier = Modifier

@@ -24,4 +24,5 @@
     <string name="server_error">An error occurred on the server. Try again later</string>
 
     <string name="successful_login">Successful enter</string>
+    <string name="successful_signup">Successful registration</string>
 </resources>
