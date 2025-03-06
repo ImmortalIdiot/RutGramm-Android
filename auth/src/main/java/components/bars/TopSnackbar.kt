@@ -32,8 +32,10 @@ internal suspend fun SnackbarHostState.showMessage(message: String) {
 }
 
 @Composable
-internal fun TopErrorSnackbar(
+internal fun TopSnackbar(
     snackbarHostState: SnackbarHostState,
+    contentColor: Color = MaterialTheme.colorScheme.onSecondary,
+    containerColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
 ) {
     val modifier = Modifier
     Box(
@@ -46,8 +48,8 @@ internal fun TopErrorSnackbar(
                 .align(Alignment.TopCenter)
         ) { snackbarData ->
             Snackbar(
-                contentColor = Color.White,
-                containerColor = MaterialTheme.colorScheme.errorContainer
+                contentColor = contentColor,
+                containerColor = containerColor
             ) {
                 Box(
                     modifier = modifier.fillMaxWidth(),

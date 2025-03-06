@@ -35,7 +35,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.immortalidiot.auth.R
 import components.bars.LocalSnackbarHostState
-import components.bars.TopErrorSnackbar
+import components.bars.TopSnackbar
 import components.bars.showMessage
 import org.koin.androidx.compose.koinViewModel
 import screens.login.LoginScreen
@@ -91,7 +91,7 @@ private fun SignUpScreenComposable(
             .padding(vertical = 64.dp),
         contentAlignment = Alignment.Center
     ) {
-        TopErrorSnackbar(snackbarHostState = snackbarHostState)
+        TopSnackbar(snackbarHostState = snackbarHostState)
 
         Text(
             modifier = Modifier

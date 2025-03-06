@@ -37,7 +37,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.immortalidiot.auth.R
 import components.bars.LocalSnackbarHostState
-import components.bars.TopErrorSnackbar
+import components.bars.TopSnackbar
 import components.bars.showMessage
 import org.koin.androidx.compose.koinViewModel
 import screens.reset_password.ResetPasswordScreen
@@ -75,6 +75,10 @@ private fun LoginScreenComposable(
             val snackbarMessage = (uiState as LoginScreenUiState.Error).errorMessage
             snackbarHostState.showMessage(message = snackbarMessage)
         }
+
+        if (uiState is LoginScreenUiState.Success) {
+            snackbarHostState.showMessage(context.getString(R.string.successful_login))
+        }
     }
 
     DisposableEffect(Unit) {
@@ -91,7 +95,17 @@ private fun LoginScreenComposable(
             .padding(vertical = 64.dp),
         contentAlignment = Alignment.Center
     ) {
-        TopErrorSnackbar(snackbarHostState = snackbarHostState)
+        if (uiState is LoginScreenUiState.Error) {
+            TopSnackbar(
+                snackbarHostState = snackbarHostState,
+                contentColor = MaterialTheme.colorScheme.onError,
+                containerColor = MaterialTheme.colorScheme.onErrorContainer
+            )
+        }
+
+        if (uiState is LoginScreenUiState.Success) {
+            TopSnackbar(snackbarHostState = snackbarHostState)
+        }
 
         Text(
             modifier = Modifier

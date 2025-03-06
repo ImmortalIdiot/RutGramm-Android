@@ -22,4 +22,6 @@
 
     <string name="smth_went_wrong_error">Что-то пошло не так</string>
     <string name="server_error">На сервере возникла ошибка. Попробуйте позднее</string>
+
+    <string name="successful_login">Успешный вход</string>
 </resources>
