@@ -66,12 +66,13 @@ internal class SignUpScreenViewModel : ViewModel() {
         }
 
         if (!validateInputs(
-            login = login,
-            email = email,
-            password = password,
-            confirmPassword = confirmPassword,
-            context = context
-        )) {
+                login = login,
+                email = email,
+                password = password,
+                confirmPassword = confirmPassword,
+                context = context
+            )
+        ) {
             return
         }
 
@@ -108,7 +109,9 @@ internal class SignUpScreenViewModel : ViewModel() {
         val errorMessage = when {
             login.isEmpty() -> context.getString(R.string.empty_login)
             email.isEmpty() -> context.getString(R.string.empty_email)
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> context.getString(R.string.invalid_email)
+            !Patterns.EMAIL_ADDRESS.matcher(email)
+                .matches() -> context.getString(R.string.invalid_email)
+
             password.isEmpty() -> context.getString(R.string.empty_password)
             password != confirmPassword -> context.getString(R.string.confirm_password_error)
             else -> null
