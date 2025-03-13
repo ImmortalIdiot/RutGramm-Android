@@ -19,14 +19,14 @@ android {
             buildConfigField(
                 "String",
                 "AUTH_URL",
-                "\"http://localhost:8080/auth/\""
+                "\"http://10.0.2.2:8080/auth/\""
             )
         }
         debug {
             buildConfigField(
                 "String",
                 "AUTH_URL",
-                "\"http://localhost:8080/auth/\""
+                "\"http://10.0.2.2:8080/auth/\""
             )
         }
     }
