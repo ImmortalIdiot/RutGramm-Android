@@ -78,7 +78,8 @@ private fun SignUpScreenComposable(
         }
 
         if (uiState is SignUpScreenUiState.Success) {
-            snackbarHostState.showMessage(message = context.getString(R.string.successful_signup))
+            snackbarHostState.showMessage(message = context.getString(R.string.check_email))
+            navigator push SignUpConfirmationScreen(modifier = modifier)
         }
     }
 

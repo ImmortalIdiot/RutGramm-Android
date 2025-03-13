@@ -41,6 +41,7 @@ import components.bars.TopSnackbar
 import components.bars.showMessage
 import org.koin.androidx.compose.koinViewModel
 import screens.reset_password.ResetPasswordScreen
+import screens.signup.SignUpConfirmationScreen
 import screens.signup.SignUpScreen
 
 internal class LoginScreen(
@@ -200,7 +201,12 @@ private fun LoginScreenComposable(
             Spacer(modifier = Modifier.height(height = 8.dp))
 
             Text(
-                modifier = Modifier.clickable { navigator.push(SignUpScreen(modifier = modifier)) },
+                modifier = Modifier.clickable {
+                    navigator.push(
+                        // TODO: replace with SignUpScreen before closing the pull request
+                        SignUpConfirmationScreen(modifier = modifier)
+                    )
+                },
                 text = context.getString(R.string.to_register),
                 style = toAnotherScreenStyle
             )

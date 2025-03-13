@@ -25,4 +25,8 @@
 
     <string name="successful_login">Successful enter</string>
     <string name="successful_signup">Successful registration</string>
+    <string name="confirm_signup">Confirm registration</string>
+    <string name="check_email">Confirmation code sent to the specified email. Check your email</string>
+    <string name="confirm">Confirm</string>
+    <string name="go_back">Go back</string>
 </resources>

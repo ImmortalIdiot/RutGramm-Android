@@ -25,4 +25,8 @@
 
     <string name="successful_login">Успешный вход</string>
     <string name="successful_signup">Успешная регистрация</string>
+    <string name="confirm_signup">Подтвердите регистрацию</string>
+    <string name="check_email">Код подтверждения отправлен на указанную почту. Проверьте её</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="go_back">Назад</string>
 </resources>
