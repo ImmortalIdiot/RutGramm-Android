@@ -97,7 +97,9 @@ private fun SignUpConfirmation(
         Text(
             text = context.getString(R.string.confirm_signup),
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 32.dp).align(Alignment.TopCenter)
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 64.dp)
         )
 
         Row(
