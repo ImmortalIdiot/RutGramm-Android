@@ -6,7 +6,6 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
-import domain.AuthData
 import domain.AuthStore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -63,39 +62,30 @@ internal class SignUpScreenViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             _uiState.value = SignUpScreenUiState.Loading
-        }
 
-        if (!validateInputs(
-                login = login,
-                email = email,
-                password = password,
-                confirmPassword = confirmPassword,
-                context = context
-            )
-        ) {
-            return
-        }
-
-        viewModelScope.launch {
-            val result = network.registration.register(login, email, password)
-
-            _uiState.value = when {
-                result.isSuccess -> {
-                    val authData = AuthData(
-                        result.getOrNull()!!.userId,
-                        result.getOrNull()!!.accessToken,
-                        result.getOrNull()!!.refreshToken
-                    )
-                    AuthStore.saveAuthData(context = context, data = authData)
-                    SignUpScreenUiState.Success
-                }
-
-                else -> SignUpScreenUiState.Error(context.getString(R.string.server_error))
+            if (!validateInputs(
+                    login = login,
+                    email = email,
+                    password = password,
+                    confirmPassword = confirmPassword,
+                    context = context
+                )
+            ) {
+                return@launch
             }
-        }
 
-        viewModelScope.launch {
-            _uiState.value = SignUpScreenUiState.Success
+            viewModelScope.launch {
+                val result = network.registration.register(login, email, password)
+
+                _uiState.value = when {
+                    result.isSuccess -> {
+                        AuthStore.saveUserId(context = context, result.getOrNull()!!.userId)
+                        SignUpScreenUiState.Success
+                    }
+
+                    else -> SignUpScreenUiState.Error(context.getString(R.string.server_error))
+                }
+            }
         }
     }
 
@@ -109,9 +99,7 @@ internal class SignUpScreenViewModel : ViewModel() {
         val errorMessage = when {
             login.isEmpty() -> context.getString(R.string.empty_login)
             email.isEmpty() -> context.getString(R.string.empty_email)
-            !Patterns.EMAIL_ADDRESS.matcher(email)
-                .matches() -> context.getString(R.string.invalid_email)
-
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> context.getString(R.string.invalid_email)
             password.isEmpty() -> context.getString(R.string.empty_password)
             password != confirmPassword -> context.getString(R.string.confirm_password_error)
             else -> null

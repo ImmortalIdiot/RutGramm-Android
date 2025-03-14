@@ -13,12 +13,23 @@ internal object AuthStore {
 
     private val Context.authDataStore by preferencesDataStore(name = "AuthData")
 
+    suspend fun saveUserId(context: Context, userId: String) {
+        context.authDataStore.edit {
+            it[KEY_USER_ID] = userId
+        }
+    }
+
     suspend fun saveAuthData(context: Context, data: AuthData) {
         context.authDataStore.edit {
             it[KEY_USER_ID] = data.userId
             it[KEY_ACCESS_TOKEN] = data.accessToken
             it[KEY_REFRESH_TOKEN] = data.refreshToken
         }
+    }
+
+    suspend fun loadUserId(context: Context): String? {
+        val preferences = context.authDataStore.data.first()
+        return preferences[KEY_USER_ID]
     }
 
     suspend fun loadAuthData(context: Context): AuthData? {
