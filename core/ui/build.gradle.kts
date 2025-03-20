@@ -35,6 +35,7 @@ dependencies {
 
     api(libs.androidx.core.ktx)
     api(libs.androidx.appcompat)
+    api(libs.androidx.lifecycle.viewmodel.compose)
 
     api(platform(libs.androidx.compose.bom))
     api(libs.androidx.ui)

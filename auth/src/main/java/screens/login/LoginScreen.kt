@@ -32,6 +32,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -39,7 +40,6 @@ import com.immortalidiot.auth.R
 import components.bars.LocalSnackbarHostState
 import components.bars.TopSnackbar
 import components.bars.showMessage
-import org.koin.androidx.compose.koinViewModel
 import screens.reset_password.email.ResetPasswordScreen
 import screens.signup.SignUpConfirmationScreen
 
@@ -48,7 +48,7 @@ internal class LoginScreen(
 ) : Screen {
     @Composable
     override fun Content() {
-        val viewModel: LoginScreenViewModel = koinViewModel()
+        val viewModel: LoginScreenViewModel = viewModel()
         LoginScreenComposable(modifier = modifier, viewModel = viewModel)
     }
 }
@@ -217,5 +217,5 @@ private fun LoginScreenComposable(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 private fun LoginScreenPreview() {
-    LoginScreenComposable(modifier = Modifier.fillMaxSize(), viewModel = koinViewModel())
+    LoginScreenComposable(modifier = Modifier.fillMaxSize(), viewModel = viewModel())
 }
