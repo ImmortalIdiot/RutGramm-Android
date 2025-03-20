@@ -1,8 +1,8 @@
 package screens.signup
 
-import android.content.Context
+import android.app.Application
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
 import domain.AuthStore
@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-internal class SignUpConfirmationViewModel : ViewModel() {
+internal class SignUpConfirmationViewModel(application: Application) : AndroidViewModel(application = application) {
+    private val context = getApplication<Application>()
+
     private val _uiState =
         MutableStateFlow<SignUpConfirmationUiState>(SignUpConfirmationUiState.Init)
     val uiState: StateFlow<SignUpConfirmationUiState> = _uiState.asStateFlow()
@@ -23,7 +25,7 @@ internal class SignUpConfirmationViewModel : ViewModel() {
         _code.value = newCode
     }
 
-    fun verifyCode(context: Context, code: String) {
+    infix fun verifyCode(code: String) {
         _uiState.value = SignUpConfirmationUiState.Loading
 
         var userId: String?

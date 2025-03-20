@@ -129,12 +129,7 @@ private fun ResetPasswordScreenComposable(
                 modifier = Modifier
                     .width(240.dp)
                     .height(48.dp),
-                onClick = {
-                    viewModel.sendEmail(
-                        email = email,
-                        context = context
-                    )
-                }
+                onClick = { viewModel sendEmail email }
             ) {
                 Text(
                     text = context.getString(R.string.send_code),

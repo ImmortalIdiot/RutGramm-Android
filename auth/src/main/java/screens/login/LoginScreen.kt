@@ -187,8 +187,7 @@ private fun LoginScreenComposable(
                 onClick = {
                     viewModel.login(
                         login = login,
-                        password = password,
-                        context = context
+                        password = password
                     )
                 }
             ) {

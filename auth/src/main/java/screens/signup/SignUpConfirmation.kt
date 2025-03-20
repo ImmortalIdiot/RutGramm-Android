@@ -165,9 +165,7 @@ private fun SignUpConfirmation(
                 modifier = Modifier
                     .width(208.dp)
                     .height(48.dp),
-                onClick = {
-                    viewModel.verifyCode(context = context, code = code)
-                },
+                onClick = { viewModel verifyCode code },
                 enabled = code.length == 6,
             ) {
                 Text(

@@ -173,12 +173,7 @@ private fun OtpScreenComposable(
                 modifier = Modifier
                     .width(240.dp)
                     .height(48.dp),
-                onClick = {
-                    viewModel.sendVerificationCode(
-                        code = code,
-                        context = context
-                    )
-                },
+                onClick = { viewModel sendVerificationCode code },
                 enabled = code.length == 6
             ) {
                 Text(

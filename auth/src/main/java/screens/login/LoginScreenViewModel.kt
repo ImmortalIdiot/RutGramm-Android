@@ -1,8 +1,8 @@
 package screens.login
 
-import android.content.Context
+import android.app.Application
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
 import domain.AuthData
@@ -15,7 +15,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import network.login.authenticate
 
-internal class LoginScreenViewModel : ViewModel() {
+internal class LoginScreenViewModel(application: Application) : AndroidViewModel(application = application) {
+    val context = getApplication<Application>()
+
     private val _uiState = MutableStateFlow<LoginScreenUiState>(LoginScreenUiState.Init)
     val uiState: StateFlow<LoginScreenUiState> = _uiState.asStateFlow()
 
@@ -40,10 +42,10 @@ internal class LoginScreenViewModel : ViewModel() {
         _isPasswordVisible.value = !_isPasswordVisible.value
     }
 
-    fun login(login: String, password: String, context: Context) {
+    fun login(login: String, password: String) {
         _uiState.value = LoginScreenUiState.Loading
 
-        if (!validateInputs(first = login, second = password, context = context)) {
+        if (!validateInputs(first = login, second = password)) {
             return
         }
 
@@ -66,7 +68,7 @@ internal class LoginScreenViewModel : ViewModel() {
         }
     }
 
-    private fun validateInputs(first: String, second: String, context: Context): Boolean {
+    private fun validateInputs(first: String, second: String): Boolean {
         if (first.isEmpty()) {
             viewModelScope.launch {
                 resetUiState()

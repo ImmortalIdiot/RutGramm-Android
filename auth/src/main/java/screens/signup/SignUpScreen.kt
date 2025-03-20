@@ -223,8 +223,7 @@ private fun SignUpScreenComposable(
                         login = login,
                         email = email,
                         password = password,
-                        confirmPassword = confirmPassword,
-                        context = context
+                        confirmPassword = confirmPassword
                     )
                 }
             ) {
@@ -236,7 +235,7 @@ private fun SignUpScreenComposable(
             Spacer(modifier = Modifier.height(height = 8.dp))
 
             Text(
-                modifier = Modifier.clickable { navigator.push(LoginScreen(modifier = modifier)) },
+                modifier = Modifier.clickable { navigator push LoginScreen(modifier = modifier) },
                 text = context.getString(R.string.to_sign_in),
                 style = MaterialTheme.typography.bodyLarge
             )

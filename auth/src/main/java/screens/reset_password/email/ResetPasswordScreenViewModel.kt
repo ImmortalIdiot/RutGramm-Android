@@ -1,9 +1,9 @@
 package screens.reset_password.email
 
-import android.content.Context
+import android.app.Application
 import android.util.Patterns
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
 import domain.AuthStore
@@ -12,7 +12,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ResetPasswordScreenViewModel : ViewModel() {
+class ResetPasswordScreenViewModel(application: Application) : AndroidViewModel(application = application) {
+    private val context = getApplication<Application>()
+
     private val _uiState =
         MutableStateFlow<ResetPasswordScreenUiState>(ResetPasswordScreenUiState.Init)
     val uiState: StateFlow<ResetPasswordScreenUiState> = _uiState.asStateFlow()
@@ -28,7 +30,7 @@ class ResetPasswordScreenViewModel : ViewModel() {
         _uiState.value = ResetPasswordScreenUiState.Init
     }
 
-    fun sendEmail(email: String, context: Context) {
+    infix fun sendEmail(email: String) {
         if (isValidEmail(email = email)) {
             viewModelScope.launch {
                 val result = network.reset_password.sendEmail(email)

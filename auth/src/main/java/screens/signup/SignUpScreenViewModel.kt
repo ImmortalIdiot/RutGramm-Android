@@ -1,9 +1,9 @@
 package screens.signup
 
-import android.content.Context
+import android.app.Application
 import android.util.Patterns
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
 import domain.AuthStore
@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class SignUpScreenViewModel : ViewModel() {
+internal class SignUpScreenViewModel(application: Application) : AndroidViewModel(application = application) {
+    private val context = getApplication<Application>()
+
     private val _uiState = MutableStateFlow<SignUpScreenUiState>(SignUpScreenUiState.Init)
     val uiState: StateFlow<SignUpScreenUiState> = _uiState.asStateFlow()
 
@@ -57,8 +59,7 @@ internal class SignUpScreenViewModel : ViewModel() {
         login: String,
         email: String,
         password: String,
-        confirmPassword: String,
-        context: Context
+        confirmPassword: String
     ) {
         viewModelScope.launch {
             _uiState.value = SignUpScreenUiState.Loading
@@ -67,8 +68,7 @@ internal class SignUpScreenViewModel : ViewModel() {
                     login = login,
                     email = email,
                     password = password,
-                    confirmPassword = confirmPassword,
-                    context = context
+                    confirmPassword = confirmPassword
                 )
             ) {
                 return@launch
@@ -94,7 +94,6 @@ internal class SignUpScreenViewModel : ViewModel() {
         email: String,
         password: String,
         confirmPassword: String,
-        context: Context
     ): Boolean {
         val errorMessage = when {
             login.isEmpty() -> context.getString(R.string.empty_login)

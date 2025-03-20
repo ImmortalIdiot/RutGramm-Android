@@ -1,8 +1,8 @@
 package screens.reset_password.otp
 
-import android.content.Context
+import android.app.Application
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
 import domain.AuthStore
@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-internal class OtpScreenViewModel : ViewModel() {
+internal class OtpScreenViewModel(application: Application) : AndroidViewModel(application = application) {
+    private val context = getApplication<Application>()
+
     private val _uiState = MutableStateFlow<OtpScreenUiState>(OtpScreenUiState.Init)
     val uiState: StateFlow<OtpScreenUiState> = _uiState.asStateFlow()
 
@@ -26,7 +28,7 @@ internal class OtpScreenViewModel : ViewModel() {
         _uiState.value = OtpScreenUiState.Initialized
     }
 
-    fun sendVerificationCode(code: String, context: Context) {
+    infix fun sendVerificationCode(code: String) {
         viewModelScope.launch {
             val email = AuthStore.loadEmailFromDataStore(context = context)
 
