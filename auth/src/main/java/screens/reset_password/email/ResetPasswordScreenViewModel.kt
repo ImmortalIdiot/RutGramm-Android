@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ResetPasswordScreenViewModel(application: Application) : AndroidViewModel(application = application) {
+internal class ResetPasswordScreenViewModel(application: Application) : AndroidViewModel(application = application) {
     private val context = getApplication<Application>()
 
     private val _uiState = MutableStateFlow<ResetPasswordScreenUiState>(ResetPasswordScreenUiState.Init)
@@ -61,7 +61,7 @@ class ResetPasswordScreenViewModel(application: Application) : AndroidViewModel(
 }
 
 @Immutable
-sealed interface ResetPasswordScreenUiState {
+internal sealed interface ResetPasswordScreenUiState {
     data object Init : ResetPasswordScreenUiState
     data class Error(val error: String) : ResetPasswordScreenUiState
     data object Success : ResetPasswordScreenUiState
