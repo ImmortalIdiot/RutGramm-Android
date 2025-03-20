@@ -15,47 +15,53 @@ internal object AuthStore {
 
     private val Context.authDataStore by preferencesDataStore(name = "AuthData")
 
-    suspend fun saveUserId(context: Context, userId: String) {
-        context.authDataStore.edit {
-            it[KEY_USER_ID] = userId
+    object UserId {
+        suspend fun saveUserId(context: Context, userId: String) {
+            context.authDataStore.edit {
+                it[KEY_USER_ID] = userId
+            }
+        }
+
+        suspend infix fun loadUserId(context: Context): String? {
+            val preferences = context.authDataStore.data.first()
+            return preferences[KEY_USER_ID]
         }
     }
 
-    suspend fun saveAuthData(context: Context, data: AuthData) {
-        context.authDataStore.edit {
-            it[KEY_USER_ID] = data.userId
-            it[KEY_ACCESS_TOKEN] = data.accessToken
-            it[KEY_REFRESH_TOKEN] = data.refreshToken
+    object Data {
+        suspend fun saveAuthData(context: Context, data: AuthData) {
+            context.authDataStore.edit {
+                it[KEY_USER_ID] = data.userId
+                it[KEY_ACCESS_TOKEN] = data.accessToken
+                it[KEY_REFRESH_TOKEN] = data.refreshToken
+            }
+        }
+
+        suspend infix fun loadAuthData(context: Context): AuthData? {
+            val preferences = context.authDataStore.data.first()
+
+            val userId = preferences[KEY_USER_ID]
+            val accessToken = preferences[KEY_ACCESS_TOKEN]
+            val refreshToken = preferences[KEY_REFRESH_TOKEN]
+
+            return if (userId != null && accessToken != null && refreshToken != null) {
+                AuthData(userId, accessToken, refreshToken)
+            } else {
+                null
+            }
         }
     }
 
-    suspend fun loadUserId(context: Context): String? {
-        val preferences = context.authDataStore.data.first()
-        return preferences[KEY_USER_ID]
-    }
-
-    suspend fun loadAuthData(context: Context): AuthData? {
-        val preferences = context.authDataStore.data.first()
-
-        val userId = preferences[KEY_USER_ID]
-        val accessToken = preferences[KEY_ACCESS_TOKEN]
-        val refreshToken = preferences[KEY_REFRESH_TOKEN]
-
-        return if (userId != null && accessToken != null && refreshToken != null) {
-            AuthData(userId, accessToken, refreshToken)
-        } else {
-            null
+    object Email {
+        suspend fun saveEmailToDataStore(context: Context, email: String) {
+            context.authDataStore.edit {
+                it[EMAIL] = email
+            }
         }
-    }
 
-    suspend fun saveEmailToDataStore(context: Context, email: String) {
-        context.authDataStore.edit {
-            it[EMAIL] = email
+        suspend infix fun loadEmailFromDataStore(context: Context): String {
+            val preferences = context.authDataStore.data.first()
+            return preferences[EMAIL] ?: ""
         }
-    }
-
-    suspend fun loadEmailFromDataStore(context: Context): String {
-        val preferences = context.authDataStore.data.first()
-        return preferences[EMAIL] ?: ""
     }
 }

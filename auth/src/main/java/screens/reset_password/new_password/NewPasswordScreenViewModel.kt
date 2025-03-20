@@ -25,7 +25,7 @@ internal class NewPasswordScreenViewModel(application: Application) : AndroidVie
 
     init {
         viewModelScope.launch {
-            _email.value = AuthStore.loadEmailFromDataStore(context = getApplication())
+            _email.value = AuthStore.Email loadEmailFromDataStore context
         }
     }
 
@@ -38,15 +38,15 @@ internal class NewPasswordScreenViewModel(application: Application) : AndroidVie
     private val _isPasswordVisible = MutableStateFlow(false)
     val isPasswordVisible: StateFlow<Boolean> = _isPasswordVisible.asStateFlow()
 
-    fun changeEmail(newEmail: String) {
+    infix fun changeEmail(newEmail: String) {
         _email.value = newEmail
     }
 
-    fun changePassword(newPassword: String) {
+    infix fun changePassword(newPassword: String) {
         _password.value = newPassword
     }
 
-    fun changeConfirmationPassword(newConfirmPassword: String) {
+    infix fun changeConfirmationPassword(newConfirmPassword: String) {
         _confirmPassword.value = newConfirmPassword
     }
 

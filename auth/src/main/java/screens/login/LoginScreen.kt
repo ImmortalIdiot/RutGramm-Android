@@ -59,8 +59,10 @@ private fun LoginScreenComposable(
     viewModel: LoginScreenViewModel
 ) {
     val navigator = LocalNavigator.currentOrThrow
+
     val context = LocalContext.current
     val activity = context as Activity
+
     val snackbarHostState = LocalSnackbarHostState.current
 
     val uiState by viewModel.uiState.collectAsState()
@@ -123,7 +125,7 @@ private fun LoginScreenComposable(
                 modifier = Modifier,
                 value = login,
                 onValueChange = { newLogin ->
-                    viewModel.changeLogin(newValue = newLogin)
+                    viewModel changeLogin newLogin
                 },
                 label = {
                     Text(text = context.getString(R.string.login_or_email_field))
@@ -138,15 +140,13 @@ private fun LoginScreenComposable(
                 modifier = Modifier,
                 value = password,
                 onValueChange = { newPassword ->
-                    viewModel.changePassword(newValue = newPassword)
+                    viewModel changePassword newPassword
                 },
                 label = {
                     Text(text = context.getString(R.string.password_field))
                 },
                 trailingIcon = {
-                    IconButton(onClick = {
-                        viewModel.changePasswordVisibility()
-                    }) {
+                    IconButton(onClick = { viewModel.changePasswordVisibility() }) {
                         Icon(
                             imageVector = if (isPasswordVisible) {
                                 Icons.Rounded.Visibility
@@ -165,19 +165,20 @@ private fun LoginScreenComposable(
                 maxLines = 1,
                 singleLine = true,
             )
+
             Spacer(modifier = Modifier.height(height = 16.dp))
+
             Text(
                 modifier = Modifier
                     .align(Alignment.End)
-                    .clickable { navigator.push(ResetPasswordScreen(modifier = modifier)) },
+                    .clickable { navigator push ResetPasswordScreen(modifier = modifier) },
                 text = context.getString(R.string.to_reset_password),
                 style = toAnotherScreenStyle
             )
         }
 
         Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
@@ -196,6 +197,7 @@ private fun LoginScreenComposable(
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
+
             Spacer(modifier = Modifier.height(height = 8.dp))
 
             Text(

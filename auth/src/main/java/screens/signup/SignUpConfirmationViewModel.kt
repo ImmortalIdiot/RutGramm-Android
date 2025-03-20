@@ -14,14 +14,13 @@ import kotlinx.coroutines.launch
 internal class SignUpConfirmationViewModel(application: Application) : AndroidViewModel(application = application) {
     private val context = getApplication<Application>()
 
-    private val _uiState =
-        MutableStateFlow<SignUpConfirmationUiState>(SignUpConfirmationUiState.Init)
+    private val _uiState = MutableStateFlow<SignUpConfirmationUiState>(SignUpConfirmationUiState.Init)
     val uiState: StateFlow<SignUpConfirmationUiState> = _uiState.asStateFlow()
 
     private val _code = MutableStateFlow("")
     val code: StateFlow<String> = _code.asStateFlow()
 
-    fun updateCode(newCode: String) {
+    infix fun updateCode(newCode: String) {
         _code.value = newCode
     }
 
@@ -31,7 +30,7 @@ internal class SignUpConfirmationViewModel(application: Application) : AndroidVi
         var userId: String?
 
         viewModelScope.launch {
-            userId = AuthStore.loadUserId(context = context)
+            userId = AuthStore.UserId loadUserId context
 
             if (userId != null) {
                 val result = network.registration.verifyCode(code = code, userId = userId!!)

@@ -55,6 +55,7 @@ private fun SignUpConfirmation(
     val navigator = LocalNavigator.currentOrThrow
 
     val context = LocalContext.current
+
     val snackbarHostState = LocalSnackbarHostState.current
 
     val uiState by viewModel.uiState.collectAsState()
@@ -95,11 +96,11 @@ private fun SignUpConfirmation(
         }
 
         Text(
-            text = context.getString(R.string.confirm_signup),
-            style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(top = 64.dp)
+                .padding(top = 64.dp),
+            text = context.getString(R.string.confirm_signup),
+            style = MaterialTheme.typography.headlineMedium
         )
 
         Row(
@@ -119,7 +120,7 @@ private fun SignUpConfirmation(
                                 }
                             }.toString()
 
-                            viewModel.updateCode(newCode)
+                            viewModel updateCode newCode
 
                             if (i < 5) {
                                 focusRequester[i + 1].requestFocus()
@@ -131,7 +132,7 @@ private fun SignUpConfirmation(
                                 code
                             }
 
-                            viewModel.updateCode(newCode)
+                            viewModel updateCode newCode
 
                             if (i > 0) {
                                 focusRequester[i - 1].requestFocus()
@@ -173,7 +174,9 @@ private fun SignUpConfirmation(
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
+
             Spacer(modifier = Modifier.height(height = 8.dp))
+
             Text(
                 modifier = Modifier.clickable { navigator push SignUpScreen(modifier = modifier) },
                 text = context.getString(R.string.go_back),

@@ -111,7 +111,7 @@ private fun ResetPasswordScreenComposable(
         OutlinedTextField(
             value = email,
             onValueChange = { newEmail ->
-                viewModel.changeEmail(newEmail = newEmail)
+                viewModel changeEmail newEmail
             },
             label = {
                 Text(text = context.getString(R.string.email_field))
@@ -121,8 +121,7 @@ private fun ResetPasswordScreenComposable(
         )
 
         Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(

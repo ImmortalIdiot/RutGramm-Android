@@ -59,6 +59,7 @@ private fun SignUpScreenComposable(
 
     val context = LocalContext.current
     val activity = context as Activity
+
     val snackbarHostState = LocalSnackbarHostState.current
 
     val uiState by viewModel.uiState.collectAsState()
@@ -124,7 +125,7 @@ private fun SignUpScreenComposable(
                 modifier = Modifier,
                 value = login,
                 onValueChange = { newLogin ->
-                    viewModel.changeLogin(newLogin = newLogin)
+                    viewModel changeLogin newLogin
                 },
                 label = {
                     Text(text = context.getString(R.string.login_field))
@@ -139,7 +140,7 @@ private fun SignUpScreenComposable(
                 modifier = Modifier,
                 value = email,
                 onValueChange = { newEmail ->
-                    viewModel.changeEmail(newEmail = newEmail)
+                    viewModel changeEmail newEmail
                 },
                 label = {
                     Text(text = context.getString(R.string.email_field))
@@ -154,7 +155,7 @@ private fun SignUpScreenComposable(
                 modifier = Modifier,
                 value = password,
                 onValueChange = { newPassword ->
-                    viewModel.changePassword(newPassword = newPassword)
+                    viewModel changePassword newPassword
                 },
                 label = {
                     Text(text = context.getString(R.string.password_field))
@@ -184,7 +185,7 @@ private fun SignUpScreenComposable(
                 modifier = Modifier,
                 value = confirmPassword,
                 onValueChange = { newConfirmPassword ->
-                    viewModel.changeConfirmationPassword(newConfirmPassword = newConfirmPassword)
+                    viewModel changeConfirmationPassword newConfirmPassword
                 },
                 label = {
                     Text(text = context.getString(R.string.confirm_password_field))
@@ -210,8 +211,7 @@ private fun SignUpScreenComposable(
         }
 
         Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
@@ -232,6 +232,7 @@ private fun SignUpScreenComposable(
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
+
             Spacer(modifier = Modifier.height(height = 8.dp))
 
             Text(

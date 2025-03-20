@@ -20,7 +20,7 @@ internal class OtpScreenViewModel(application: Application) : AndroidViewModel(a
     private val _code = MutableStateFlow("")
     val code: StateFlow<String> = _code.asStateFlow()
 
-    fun updateCode(code: String) {
+    infix fun updateCode(code: String) {
         _code.value = code
     }
 
@@ -30,7 +30,7 @@ internal class OtpScreenViewModel(application: Application) : AndroidViewModel(a
 
     infix fun sendVerificationCode(code: String) {
         viewModelScope.launch {
-            val email = AuthStore.loadEmailFromDataStore(context = context)
+            val email = AuthStore.Email loadEmailFromDataStore context
 
             val result = network.reset_password.verifyCode(code = code, email = email)
 

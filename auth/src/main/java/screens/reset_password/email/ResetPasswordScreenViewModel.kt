@@ -15,14 +15,13 @@ import kotlinx.coroutines.launch
 class ResetPasswordScreenViewModel(application: Application) : AndroidViewModel(application = application) {
     private val context = getApplication<Application>()
 
-    private val _uiState =
-        MutableStateFlow<ResetPasswordScreenUiState>(ResetPasswordScreenUiState.Init)
+    private val _uiState = MutableStateFlow<ResetPasswordScreenUiState>(ResetPasswordScreenUiState.Init)
     val uiState: StateFlow<ResetPasswordScreenUiState> = _uiState.asStateFlow()
 
     private val _email = MutableStateFlow("")
     val email: StateFlow<String> = _email.asStateFlow()
 
-    fun changeEmail(newEmail: String) {
+    infix fun changeEmail(newEmail: String) {
         _email.value = newEmail
     }
 
@@ -36,7 +35,7 @@ class ResetPasswordScreenViewModel(application: Application) : AndroidViewModel(
                 val result = network.reset_password.sendEmail(email)
 
                 if (result.isSuccess && result.getOrNull() == "success") {
-                    AuthStore.saveEmailToDataStore(context = context, email = email)
+                    AuthStore.Email.saveEmailToDataStore(context = context, email = email)
                     _uiState.value = ResetPasswordScreenUiState.Success
                 } else if (result.isSuccess) {
                     _uiState.value = ResetPasswordScreenUiState.Error(

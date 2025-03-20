@@ -30,11 +30,11 @@ internal class LoginScreenViewModel(application: Application) : AndroidViewModel
     private val _isPasswordVisible = MutableStateFlow(false)
     val isPasswordVisible = _isPasswordVisible.asStateFlow()
 
-    fun changeLogin(newValue: String) {
+    infix fun changeLogin(newValue: String) {
         _login.value = newValue
     }
 
-    fun changePassword(newValue: String) {
+    infix fun changePassword(newValue: String) {
         _password.value = newValue
     }
 
@@ -59,7 +59,7 @@ internal class LoginScreenViewModel(application: Application) : AndroidViewModel
                         result.getOrNull()!!.accessToken,
                         result.getOrNull()!!.refreshToken
                     )
-                    AuthStore.saveAuthData(context = context, data = authData)
+                    AuthStore.Data.saveAuthData(context = context, data = authData)
                     LoginScreenUiState.Success
                 }
 

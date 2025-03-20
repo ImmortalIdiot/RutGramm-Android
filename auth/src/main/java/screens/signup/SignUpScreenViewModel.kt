@@ -35,19 +35,19 @@ internal class SignUpScreenViewModel(application: Application) : AndroidViewMode
     private val _isPasswordVisible = MutableStateFlow(false)
     val isPasswordVisible: StateFlow<Boolean> = _isPasswordVisible.asStateFlow()
 
-    fun changeLogin(newLogin: String) {
+    infix fun changeLogin(newLogin: String) {
         _login.value = newLogin
     }
 
-    fun changeEmail(newEmail: String) {
+    infix fun changeEmail(newEmail: String) {
         _email.value = newEmail
     }
 
-    fun changePassword(newPassword: String) {
+    infix fun changePassword(newPassword: String) {
         _password.value = newPassword
     }
 
-    fun changeConfirmationPassword(newConfirmPassword: String) {
+    infix fun changeConfirmationPassword(newConfirmPassword: String) {
         _confirmPassword.value = newConfirmPassword
     }
 
@@ -79,7 +79,7 @@ internal class SignUpScreenViewModel(application: Application) : AndroidViewMode
 
                 _uiState.value = when {
                     result.isSuccess -> {
-                        AuthStore.saveUserId(context = context, result.getOrNull()!!.userId)
+                        AuthStore.UserId.saveUserId(context = context, result.getOrNull()!!.userId)
                         SignUpScreenUiState.Success
                     }
 
@@ -93,7 +93,7 @@ internal class SignUpScreenViewModel(application: Application) : AndroidViewMode
         login: String,
         email: String,
         password: String,
-        confirmPassword: String,
+        confirmPassword: String
     ): Boolean {
         val errorMessage = when {
             login.isEmpty() -> context.getString(R.string.empty_login)

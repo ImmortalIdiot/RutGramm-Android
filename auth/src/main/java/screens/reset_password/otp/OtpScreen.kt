@@ -127,7 +127,7 @@ private fun OtpScreenComposable(
                                 }
                             }.toString()
 
-                            viewModel.updateCode(newCode)
+                            viewModel updateCode newCode
 
                             if (i < 5) {
                                 focusRequester[i + 1].requestFocus()
@@ -139,7 +139,7 @@ private fun OtpScreenComposable(
                                 code
                             }
 
-                            viewModel.updateCode(newCode)
+                            viewModel updateCode newCode
 
                             if (i > 0) {
                                 focusRequester[i - 1].requestFocus()
@@ -165,8 +165,7 @@ private fun OtpScreenComposable(
             }
         }
         Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
@@ -181,6 +180,7 @@ private fun OtpScreenComposable(
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
+
             Spacer(modifier = Modifier.height(height = 8.dp))
 
             Text(

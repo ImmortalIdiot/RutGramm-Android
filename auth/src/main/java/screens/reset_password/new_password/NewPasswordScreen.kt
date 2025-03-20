@@ -114,7 +114,10 @@ private fun NewPasswordScreenComposable(
             )
         }
 
-        if (uiState is NewPasswordScreenUiState.Init || uiState is NewPasswordScreenUiState.Success) {
+        if (
+            uiState is NewPasswordScreenUiState.Init ||
+            uiState is NewPasswordScreenUiState.Success
+        ) {
             TopSnackbar(snackbarHostState = snackbarHostState)
         }
 
@@ -134,7 +137,7 @@ private fun NewPasswordScreenComposable(
                 modifier = Modifier,
                 value = email,
                 onValueChange = { newEmail ->
-                    viewModel.changeEmail(newEmail = newEmail)
+                    viewModel changeEmail newEmail
                 },
                 label = {
                     Text(text = context.getString(R.string.email_field))
@@ -149,7 +152,7 @@ private fun NewPasswordScreenComposable(
                 modifier = Modifier,
                 value = password,
                 onValueChange = { newPassword ->
-                    viewModel.changePassword(newPassword = newPassword)
+                    viewModel changePassword newPassword
                 },
                 label = {
                     Text(text = context.getString(R.string.password_field))
@@ -179,7 +182,7 @@ private fun NewPasswordScreenComposable(
                 modifier = Modifier,
                 value = confirmPassword,
                 onValueChange = { newConfirmPassword ->
-                    viewModel.changeConfirmationPassword(newConfirmPassword = newConfirmPassword)
+                    viewModel changeConfirmationPassword newConfirmPassword
                 },
                 label = {
                     Text(text = context.getString(R.string.confirm_password_field))
@@ -226,6 +229,7 @@ private fun NewPasswordScreenComposable(
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
+
             Text(
                 modifier = Modifier.clickable {
                     navigator push OtpScreen(modifier = modifier)
