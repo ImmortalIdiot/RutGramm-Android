@@ -41,7 +41,7 @@ import components.bars.LocalSnackbarHostState
 import components.bars.TopSnackbar
 import components.bars.showMessage
 import screens.reset_password.email.ResetPasswordScreen
-import screens.signup.SignUpConfirmationScreen
+import screens.signup.SignUpScreen
 
 internal class LoginScreen(
     private val modifier: Modifier
@@ -201,10 +201,7 @@ private fun LoginScreenComposable(
 
             Text(
                 modifier = Modifier.clickable {
-                    navigator.push(
-                        // TODO: replace with SignUpScreen before closing the pull request
-                        SignUpConfirmationScreen(modifier = modifier)
-                    )
+                    navigator push SignUpScreen(modifier = modifier)
                 },
                 text = context.getString(R.string.to_register),
                 style = toAnotherScreenStyle
