@@ -1,7 +1,6 @@
 package network.registration
 
 import domain.models.signup.SignUpConfirmRequest
-import domain.models.signup.SignUpConfirmResponse
 import domain.models.signup.SignUpRequest
 import domain.models.signup.SignUpResponse
 import io.ktor.client.call.body
@@ -41,12 +40,12 @@ internal suspend fun verifyCode(
     return try {
         val signUpConfirmRequest = SignUpConfirmRequest(code = code, userId = userId)
 
-        val response: SignUpConfirmResponse = client.post(Auth.CONFIRM_REGISTRATION_URL) {
+        val response: String = client.post(Auth.CONFIRM_REGISTRATION_URL) {
             contentType(ContentType.Application.Json)
             setBody(signUpConfirmRequest)
         }.body()
 
-        Result.success(response.message)
+        Result.success(response)
     } catch (responseException: ResponseException) {
         Result.failure(responseException)
     } catch (e: Exception) {
