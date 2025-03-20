@@ -29,4 +29,13 @@
     <string name="check_email">Confirmation code sent to the specified email. Check your email</string>
     <string name="confirm">Confirm</string>
     <string name="go_back">Go back</string>
+
+    <string name="reset_password_screen">Reset password</string>
+    <string name="email_not_exists">There is no user with this email</string>
+    <string name="send_code">Send code</string>
+    <string name="verify_code">Verify code</string>
+    <string name="incorrect_code">Incorrect verification code</string>
+    <string name="input_new_password">Enter the new password</string>
+    <string name="password_changed">The password has been changed</string>
+    <string name="reset">Reset</string>
 </resources>

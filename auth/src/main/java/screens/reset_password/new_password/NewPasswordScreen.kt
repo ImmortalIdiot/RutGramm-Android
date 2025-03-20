@@ -1,8 +1,7 @@
-package screens.login
+package screens.reset_password.new_password
 
 import android.app.Activity
 import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,8 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -39,51 +38,63 @@ import com.immortalidiot.auth.R
 import components.bars.LocalSnackbarHostState
 import components.bars.TopSnackbar
 import components.bars.showMessage
-import org.koin.androidx.compose.koinViewModel
-import screens.reset_password.email.ResetPasswordScreen
-import screens.signup.SignUpConfirmationScreen
+import screens.login.LoginScreen
+import screens.reset_password.otp.OtpScreen
 
-internal class LoginScreen(
+internal class NewPasswordScreen(
     private val modifier: Modifier
 ) : Screen {
     @Composable
     override fun Content() {
-        val viewModel: LoginScreenViewModel = koinViewModel()
-        LoginScreenComposable(modifier = modifier, viewModel = viewModel)
+        val viewModel: NewPasswordScreenViewModel = viewModel()
+
+        NewPasswordScreenComposable(
+            modifier = modifier,
+            viewModel = viewModel
+        )
     }
 }
 
 @Composable
-private fun LoginScreenComposable(
+private fun NewPasswordScreenComposable(
     modifier: Modifier,
-    viewModel: LoginScreenViewModel
+    viewModel: NewPasswordScreenViewModel
 ) {
     val navigator = LocalNavigator.currentOrThrow
+
     val context = LocalContext.current
     val activity = context as Activity
+
     val snackbarHostState = LocalSnackbarHostState.current
 
     val uiState by viewModel.uiState.collectAsState()
-    val login by viewModel.login.collectAsState()
+    val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
+    val confirmPassword by viewModel.confirmPassword.collectAsState()
     val isPasswordVisible by viewModel.isPasswordVisible.collectAsState()
 
-    val toAnotherScreenStyle = MaterialTheme.typography.bodyLarge
+    val visualTransformation =
+        if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
 
     LaunchedEffect(uiState) {
-        if (uiState is LoginScreenUiState.Error) {
-            val snackbarMessage = (uiState as LoginScreenUiState.Error).errorMessage
+        if (uiState is NewPasswordScreenUiState.Init) {
+            snackbarHostState.showMessage(context.getString(R.string.input_new_password))
+            viewModel.updateUiState()
+        }
+
+        if (uiState is NewPasswordScreenUiState.Error) {
+            val snackbarMessage = (uiState as NewPasswordScreenUiState.Error).errorMessage
             snackbarHostState.showMessage(message = snackbarMessage)
         }
 
-        if (uiState is LoginScreenUiState.Success) {
-            snackbarHostState.showMessage(context.getString(R.string.successful_login))
+        if (uiState is NewPasswordScreenUiState.Success) {
+            snackbarHostState.showMessage(message = context.getString(R.string.password_changed))
+            navigator push LoginScreen(modifier = modifier)
         }
     }
 
     DisposableEffect(Unit) {
         activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
         onDispose {
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         }
@@ -95,7 +106,7 @@ private fun LoginScreenComposable(
             .padding(vertical = 64.dp),
         contentAlignment = Alignment.Center
     ) {
-        if (uiState is LoginScreenUiState.Error) {
+        if (uiState is NewPasswordScreenUiState.Error) {
             TopSnackbar(
                 snackbarHostState = snackbarHostState,
                 contentColor = MaterialTheme.colorScheme.error,
@@ -103,7 +114,7 @@ private fun LoginScreenComposable(
             )
         }
 
-        if (uiState is LoginScreenUiState.Success) {
+        if (uiState is NewPasswordScreenUiState.Init || uiState is NewPasswordScreenUiState.Success) {
             TopSnackbar(snackbarHostState = snackbarHostState)
         }
 
@@ -111,7 +122,7 @@ private fun LoginScreenComposable(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 64.dp),
-            text = context.getString(R.string.sign_in_screen),
+            text = context.getString(R.string.reset_password_screen),
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -121,12 +132,12 @@ private fun LoginScreenComposable(
         ) {
             OutlinedTextField(
                 modifier = Modifier,
-                value = login,
-                onValueChange = { newLogin ->
-                    viewModel.changeLogin(newValue = newLogin)
+                value = email,
+                onValueChange = { newEmail ->
+                    viewModel.changeEmail(newEmail = newEmail)
                 },
                 label = {
-                    Text(text = context.getString(R.string.login_or_email_field))
+                    Text(text = context.getString(R.string.email_field))
                 },
                 maxLines = 1,
                 singleLine = true,
@@ -138,7 +149,7 @@ private fun LoginScreenComposable(
                 modifier = Modifier,
                 value = password,
                 onValueChange = { newPassword ->
-                    viewModel.changePassword(newValue = newPassword)
+                    viewModel.changePassword(newPassword = newPassword)
                 },
                 label = {
                     Text(text = context.getString(R.string.password_field))
@@ -157,21 +168,39 @@ private fun LoginScreenComposable(
                         )
                     }
                 },
-                visualTransformation = if (isPasswordVisible) {
-                    VisualTransformation.None
-                } else {
-                    PasswordVisualTransformation()
-                },
+                visualTransformation = visualTransformation,
                 maxLines = 1,
                 singleLine = true,
             )
+
             Spacer(modifier = Modifier.height(height = 16.dp))
-            Text(
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .clickable { navigator.push(ResetPasswordScreen(modifier = modifier)) },
-                text = context.getString(R.string.to_reset_password),
-                style = toAnotherScreenStyle
+
+            OutlinedTextField(
+                modifier = Modifier,
+                value = confirmPassword,
+                onValueChange = { newConfirmPassword ->
+                    viewModel.changeConfirmationPassword(newConfirmPassword = newConfirmPassword)
+                },
+                label = {
+                    Text(text = context.getString(R.string.confirm_password_field))
+                },
+                trailingIcon = {
+                    IconButton(onClick = {
+                        viewModel.changePasswordVisibility()
+                    }) {
+                        Icon(
+                            imageVector = if (isPasswordVisible) {
+                                Icons.Rounded.Visibility
+                            } else {
+                                Icons.Rounded.VisibilityOff
+                            },
+                            contentDescription = ""
+                        )
+                    }
+                },
+                visualTransformation = visualTransformation,
+                maxLines = 1,
+                singleLine = true,
             )
         }
 
@@ -182,40 +211,28 @@ private fun LoginScreenComposable(
         ) {
             Button(
                 modifier = Modifier
-                    .width(160.dp)
+                    .width(296.dp)
                     .height(48.dp),
                 onClick = {
-                    viewModel.login(
-                        login = login,
+                    viewModel.resetPassword(
+                        email = email,
                         password = password,
-                        context = context
+                        confirmPassword = confirmPassword
                     )
                 }
             ) {
                 Text(
-                    text = context.getString(R.string.sign_in),
+                    text = context.getString(R.string.reset),
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
-            Spacer(modifier = Modifier.height(height = 8.dp))
-
             Text(
                 modifier = Modifier.clickable {
-                    navigator.push(
-                        // TODO: replace with SignUpScreen before closing the pull request
-                        SignUpConfirmationScreen(modifier = modifier)
-                    )
+                    navigator push OtpScreen(modifier = modifier)
                 },
-                text = context.getString(R.string.to_register),
-                style = toAnotherScreenStyle
+                text = context.getString(R.string.go_back),
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
-}
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Composable
-private fun LoginScreenPreview() {
-    LoginScreenComposable(modifier = Modifier.fillMaxSize(), viewModel = koinViewModel())
 }

@@ -11,6 +11,8 @@ internal object AuthStore {
     private val KEY_ACCESS_TOKEN = stringPreferencesKey(name = "access_token")
     private val KEY_REFRESH_TOKEN = stringPreferencesKey(name = "refresh_token")
 
+    private val EMAIL = stringPreferencesKey(name = "email")
+
     private val Context.authDataStore by preferencesDataStore(name = "AuthData")
 
     suspend fun saveUserId(context: Context, userId: String) {
@@ -44,5 +46,16 @@ internal object AuthStore {
         } else {
             null
         }
+    }
+
+    suspend fun saveEmailToDataStore(context: Context, email: String) {
+        context.authDataStore.edit {
+            it[EMAIL] = email
+        }
+    }
+
+    suspend fun loadEmailFromDataStore(context: Context): String {
+        val preferences = context.authDataStore.data.first()
+        return preferences[EMAIL] ?: ""
     }
 }

@@ -22,4 +22,7 @@ internal object Auth {
     const val LOGIN_URL = BuildConfig.AUTH_URL + "login"
     const val REGISTER_URL = BuildConfig.AUTH_URL + "register"
     const val CONFIRM_REGISTRATION_URL = BuildConfig.AUTH_URL + "verify-registration"
+    const val SEND_EMAIL = BuildConfig.AUTH_URL + "password-reset"
+    const val VERIFY_RESET_CODE = BuildConfig.AUTH_URL + "verify-reset-code"
+    const val RESET_PASSWORD = BuildConfig.AUTH_URL + "reset-password"
 }

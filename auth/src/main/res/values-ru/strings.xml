@@ -29,4 +29,13 @@
     <string name="check_email">Код подтверждения отправлен на указанную почту. Проверьте её</string>
     <string name="confirm">Подтвердить</string>
     <string name="go_back">Назад</string>
+
+    <string name="reset_password_screen">Восстановление пароля</string>
+    <string name="email_not_exists">Пользователя с такой почтой не существует</string>
+    <string name="send_code">Отправить код</string>
+    <string name="verify_code">Проверить код</string>
+    <string name="incorrect_code">Неверный код подтверждения</string>
+    <string name="input_new_password">Введите новый пароль</string>
+    <string name="password_changed">Пароль изменён</string>
+    <string name="reset">Сменить</string>
 </resources>
