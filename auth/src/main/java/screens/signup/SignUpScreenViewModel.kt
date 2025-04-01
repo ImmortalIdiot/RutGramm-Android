@@ -1,9 +1,9 @@
 package screens.signup
 
-import android.app.Application
+import android.content.Context
 import android.util.Patterns
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
 import domain.AuthStore
@@ -14,9 +14,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class SignUpScreenViewModel(application: Application) : AndroidViewModel(application = application) {
-    private val context = getApplication<Application>()
-
+internal class SignUpScreenViewModel(
+    private val applicationContext: Context
+) : ViewModel() {
     private val _uiState = MutableStateFlow<SignUpScreenUiState>(SignUpScreenUiState.Init)
     val uiState: StateFlow<SignUpScreenUiState> = _uiState.asStateFlow()
 
@@ -79,11 +79,11 @@ internal class SignUpScreenViewModel(application: Application) : AndroidViewMode
 
                 _uiState.value = when {
                     result.isSuccess -> {
-                        AuthStore.UserId.saveUserId(context = context, result.getOrNull()!!.userId)
+                        AuthStore.UserId.saveUserId(context = applicationContext, result.getOrNull()!!.userId)
                         SignUpScreenUiState.Success
                     }
 
-                    else -> SignUpScreenUiState.Error(context.getString(R.string.server_error))
+                    else -> SignUpScreenUiState.Error(applicationContext.getString(R.string.server_error))
                 }
             }
         }
@@ -96,11 +96,11 @@ internal class SignUpScreenViewModel(application: Application) : AndroidViewMode
         confirmPassword: String
     ): Boolean {
         val errorMessage = when {
-            login.isEmpty() -> context.getString(R.string.empty_login)
-            email.isEmpty() -> context.getString(R.string.empty_email)
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> context.getString(R.string.invalid_email)
-            password.isEmpty() -> context.getString(R.string.empty_password)
-            password != confirmPassword -> context.getString(R.string.confirm_password_error)
+            login.isEmpty() -> applicationContext.getString(R.string.empty_login)
+            email.isEmpty() -> applicationContext.getString(R.string.empty_email)
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> applicationContext.getString(R.string.invalid_email)
+            password.isEmpty() -> applicationContext.getString(R.string.empty_password)
+            password != confirmPassword -> applicationContext.getString(R.string.confirm_password_error)
             else -> null
         }
 

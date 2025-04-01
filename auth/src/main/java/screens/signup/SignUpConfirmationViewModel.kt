@@ -1,8 +1,8 @@
 package screens.signup
 
-import android.app.Application
+import android.content.Context
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
 import domain.AuthStore
@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-internal class SignUpConfirmationViewModel(application: Application) : AndroidViewModel(application = application) {
-    private val context = getApplication<Application>()
-
+internal class SignUpConfirmationViewModel(
+    private val applicationContext: Context
+) : ViewModel() {
     private val _uiState = MutableStateFlow<SignUpConfirmationUiState>(SignUpConfirmationUiState.Init)
     val uiState: StateFlow<SignUpConfirmationUiState> = _uiState.asStateFlow()
 
@@ -30,7 +30,7 @@ internal class SignUpConfirmationViewModel(application: Application) : AndroidVi
         var userId: String?
 
         viewModelScope.launch {
-            userId = AuthStore.UserId loadUserId context
+            userId = AuthStore.UserId loadUserId applicationContext
 
             if (userId != null) {
                 val result = network.registration.verifyCode(code = code, userId = userId!!)
@@ -40,13 +40,13 @@ internal class SignUpConfirmationViewModel(application: Application) : AndroidVi
 
                     else -> {
                         SignUpConfirmationUiState.Error(
-                            message = context.getString(R.string.smth_went_wrong_error)
+                            message = applicationContext.getString(R.string.smth_went_wrong_error)
                         )
                     }
                 }
             } else {
                 _uiState.value = SignUpConfirmationUiState.Error(
-                    context.getString(R.string.smth_went_wrong_error)
+                    applicationContext.getString(R.string.smth_went_wrong_error)
                 )
             }
         }

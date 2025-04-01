@@ -1,8 +1,8 @@
 package screens.reset_password.otp
 
-import android.app.Application
+import android.content.Context
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
 import domain.AuthStore
@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-internal class OtpScreenViewModel(application: Application) : AndroidViewModel(application = application) {
-    private val context = getApplication<Application>()
-
+internal class OtpScreenViewModel(
+    private val applicationContext: Context
+) : ViewModel() {
     private val _uiState = MutableStateFlow<OtpScreenUiState>(OtpScreenUiState.Init)
     val uiState: StateFlow<OtpScreenUiState> = _uiState.asStateFlow()
 
@@ -30,7 +30,7 @@ internal class OtpScreenViewModel(application: Application) : AndroidViewModel(a
 
     infix fun sendVerificationCode(code: String) {
         viewModelScope.launch {
-            val email = AuthStore.Email loadEmailFromDataStore context
+            val email = AuthStore.Email loadEmailFromDataStore applicationContext
 
             val result = network.reset_password.verifyCode(code = code, email = email)
 
@@ -38,11 +38,11 @@ internal class OtpScreenViewModel(application: Application) : AndroidViewModel(a
                 _uiState.value = OtpScreenUiState.Success
             } else if (result.isSuccess) {
                 _uiState.value = OtpScreenUiState.Error(
-                    errorMessage = context.getString(R.string.incorrect_code)
+                    errorMessage = applicationContext.getString(R.string.incorrect_code)
                 )
             } else {
                 _uiState.value = OtpScreenUiState.Error(
-                    errorMessage = context.getString(R.string.server_error)
+                    errorMessage = applicationContext.getString(R.string.server_error)
                 )
             }
         }

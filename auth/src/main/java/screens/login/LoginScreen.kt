@@ -25,6 +25,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -40,6 +41,7 @@ import com.immortalidiot.auth.R
 import components.bars.LocalSnackbarHostState
 import components.bars.TopSnackbar
 import components.bars.showMessage
+import org.koin.androidx.compose.koinViewModel
 import screens.reset_password.email.ResetPasswordScreen
 import screens.signup.SignUpScreen
 
@@ -48,7 +50,7 @@ internal class LoginScreen(
 ) : Screen {
     @Composable
     override fun Content() {
-        val viewModel: LoginScreenViewModel = viewModel()
+        val viewModel: LoginScreenViewModel = koinViewModel()
         LoginScreenComposable(modifier = modifier, viewModel = viewModel)
     }
 }
@@ -124,8 +126,10 @@ private fun LoginScreenComposable(
             OutlinedTextField(
                 modifier = Modifier,
                 value = login,
-                onValueChange = { newLogin ->
-                    viewModel changeLogin newLogin
+                onValueChange = remember {
+                    { newLogin ->
+                        viewModel changeLogin newLogin
+                    }
                 },
                 label = {
                     Text(text = context.getString(R.string.login_or_email_field))
@@ -146,7 +150,9 @@ private fun LoginScreenComposable(
                     Text(text = context.getString(R.string.password_field))
                 },
                 trailingIcon = {
-                    IconButton(onClick = { viewModel.changePasswordVisibility() }) {
+                    IconButton(onClick = remember {
+                        { viewModel.changePasswordVisibility() }
+                    }) {
                         Icon(
                             imageVector = if (isPasswordVisible) {
                                 Icons.Rounded.Visibility

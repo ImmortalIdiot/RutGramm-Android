@@ -1,8 +1,8 @@
 package screens.login
 
-import android.app.Application
+import android.content.Context
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
 import domain.AuthData
@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import network.login.authenticate
 
-internal class LoginScreenViewModel(application: Application) : AndroidViewModel(application = application) {
-    val context = getApplication<Application>()
-
+internal class LoginScreenViewModel(
+    private val applicationContext: Context
+): ViewModel() {
     private val _uiState = MutableStateFlow<LoginScreenUiState>(LoginScreenUiState.Init)
     val uiState: StateFlow<LoginScreenUiState> = _uiState.asStateFlow()
 
@@ -59,11 +59,11 @@ internal class LoginScreenViewModel(application: Application) : AndroidViewModel
                         result.getOrNull()!!.accessToken,
                         result.getOrNull()!!.refreshToken
                     )
-                    AuthStore.Data.saveAuthData(context = context, data = authData)
+                    AuthStore.Data.saveAuthData(context = applicationContext, data = authData)
                     LoginScreenUiState.Success
                 }
 
-                else -> LoginScreenUiState.Error(context.getString(R.string.server_error))
+                else -> LoginScreenUiState.Error(applicationContext.getString(R.string.server_error))
             }
         }
     }
@@ -73,7 +73,7 @@ internal class LoginScreenViewModel(application: Application) : AndroidViewModel
             viewModelScope.launch {
                 resetUiState()
                 _uiState.value = LoginScreenUiState.Error(
-                    errorMessage = context.getString(R.string.empty_login)
+                    errorMessage = applicationContext.getString(R.string.empty_login)
                 )
             }
             return false
@@ -83,7 +83,7 @@ internal class LoginScreenViewModel(application: Application) : AndroidViewModel
             viewModelScope.launch {
                 resetUiState()
                 _uiState.value = LoginScreenUiState.Error(
-                    errorMessage = context.getString(R.string.empty_password)
+                    errorMessage = applicationContext.getString(R.string.empty_password)
                 )
             }
             return false

@@ -28,7 +28,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -36,13 +35,14 @@ import com.immortalidiot.auth.R
 import components.bars.LocalSnackbarHostState
 import components.bars.TopSnackbar
 import components.bars.showMessage
+import org.koin.androidx.compose.koinViewModel
 
 internal class SignUpConfirmationScreen(
     private val modifier: Modifier
 ) : Screen {
     @Composable
     override fun Content() {
-        val viewModel: SignUpConfirmationViewModel = viewModel()
+        val viewModel: SignUpConfirmationViewModel = koinViewModel()
         SignUpConfirmation(viewModel = viewModel, modifier = modifier)
     }
 }
