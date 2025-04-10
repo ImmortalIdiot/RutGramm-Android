@@ -1,18 +1,19 @@
 package screens.reset_password.otp
 
-import android.content.Context
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
-import domain.AuthStore
+import di.ResourceProvider
+import domain.AuthDataStore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 internal class OtpScreenViewModel(
-    private val applicationContext: Context
+    private val resourceProvider: ResourceProvider,
+    private val datastore: AuthDataStore
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<OtpScreenUiState>(OtpScreenUiState.Init)
     val uiState: StateFlow<OtpScreenUiState> = _uiState.asStateFlow()
@@ -30,7 +31,7 @@ internal class OtpScreenViewModel(
 
     infix fun sendVerificationCode(code: String) {
         viewModelScope.launch {
-            val email = AuthStore.Email loadEmailFromDataStore applicationContext
+            val email = datastore.loadEmailFromDataStore()
 
             val result = network.reset_password.verifyCode(code = code, email = email)
 
@@ -38,11 +39,11 @@ internal class OtpScreenViewModel(
                 _uiState.value = OtpScreenUiState.Success
             } else if (result.isSuccess) {
                 _uiState.value = OtpScreenUiState.Error(
-                    errorMessage = applicationContext.getString(R.string.incorrect_code)
+                    errorMessage = resourceProvider.getString(R.string.incorrect_code)
                 )
             } else {
                 _uiState.value = OtpScreenUiState.Error(
-                    errorMessage = applicationContext.getString(R.string.server_error)
+                    errorMessage = resourceProvider.getString(R.string.server_error)
                 )
             }
         }

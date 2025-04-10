@@ -1,6 +1,7 @@
 package di
 
-import android.content.Context
+import domain.AuthDataStore
+import domain.AuthDataStoreImpl
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -12,14 +13,15 @@ import screens.signup.SignUpConfirmationViewModel
 import screens.signup.SignUpScreenViewModel
 
 val authModule = module {
-    single<Context> { androidApplication() }
+    single<ResourceProvider> { ResourceProviderImpl(androidApplication()) }
+    single<AuthDataStore> { AuthDataStoreImpl(androidApplication()) }
 
-    viewModel { LoginScreenViewModel(get()) }
+    viewModel { LoginScreenViewModel(get(), get()) }
 
-    viewModel { SignUpScreenViewModel(get()) }
-    viewModel { SignUpConfirmationViewModel(get()) }
+    viewModel { SignUpScreenViewModel(get(), get()) }
+    viewModel { SignUpConfirmationViewModel(get(), get()) }
 
-    viewModel { ResetPasswordScreenViewModel(get()) }
-    viewModel { OtpScreenViewModel(get()) }
-    viewModel { NewPasswordScreenViewModel(get()) }
+    viewModel { ResetPasswordScreenViewModel(get(), get()) }
+    viewModel { OtpScreenViewModel(get(), get()) }
+    viewModel { NewPasswordScreenViewModel(get(), get()) }
 }

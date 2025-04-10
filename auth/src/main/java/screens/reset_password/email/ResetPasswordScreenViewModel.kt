@@ -1,19 +1,20 @@
 package screens.reset_password.email
 
-import android.content.Context
 import android.util.Patterns
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
-import domain.AuthStore
+import di.ResourceProvider
+import domain.AuthDataStore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 internal class ResetPasswordScreenViewModel(
-    private val applicationContext: Context
+    private val resourceProvider: ResourceProvider,
+    private val dataStore: AuthDataStore
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<ResetPasswordScreenUiState>(ResetPasswordScreenUiState.Init)
     val uiState: StateFlow<ResetPasswordScreenUiState> = _uiState.asStateFlow()
@@ -35,22 +36,22 @@ internal class ResetPasswordScreenViewModel(
                 val result = network.reset_password.sendEmail(email)
 
                 if (result.isSuccess && result.getOrNull() == "success") {
-                    AuthStore.Email.saveEmailToDataStore(context = applicationContext, email = email)
+                    dataStore.saveEmailToDataStore(email = email)
                     _uiState.value = ResetPasswordScreenUiState.Success
                 } else if (result.isSuccess) {
                     _uiState.value = ResetPasswordScreenUiState.Error(
-                       error = applicationContext.getString(R.string.email_not_exists)
+                       error = resourceProvider.getString(R.string.email_not_exists)
                     )
                 } else {
                     _uiState.value = ResetPasswordScreenUiState.Error(
-                        error = applicationContext.getString(R.string.server_error)
+                        error = resourceProvider.getString(R.string.server_error)
                     )
                 }
             }
         } else {
             viewModelScope.launch {
                 _uiState.value =
-                    ResetPasswordScreenUiState.Error(applicationContext.getString(R.string.invalid_email))
+                    ResetPasswordScreenUiState.Error(resourceProvider.getString(R.string.invalid_email))
             }
         }
     }

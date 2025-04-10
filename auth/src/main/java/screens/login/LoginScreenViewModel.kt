@@ -1,12 +1,12 @@
 package screens.login
 
-import android.content.Context
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
+import di.ResourceProvider
 import domain.AuthData
-import domain.AuthStore
+import domain.AuthDataStore
 import domain.models.login.LoginResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,8 @@ import kotlinx.coroutines.launch
 import network.login.authenticate
 
 internal class LoginScreenViewModel(
-    private val applicationContext: Context
+    private val resourceProvider: ResourceProvider,
+    private val datastore: AuthDataStore
 ): ViewModel() {
     private val _uiState = MutableStateFlow<LoginScreenUiState>(LoginScreenUiState.Init)
     val uiState: StateFlow<LoginScreenUiState> = _uiState.asStateFlow()
@@ -59,11 +60,11 @@ internal class LoginScreenViewModel(
                         result.getOrNull()!!.accessToken,
                         result.getOrNull()!!.refreshToken
                     )
-                    AuthStore.Data.saveAuthData(context = applicationContext, data = authData)
+                    datastore.saveAuthData(data = authData)
                     LoginScreenUiState.Success
                 }
 
-                else -> LoginScreenUiState.Error(applicationContext.getString(R.string.server_error))
+                else -> LoginScreenUiState.Error(resourceProvider.getString(R.string.server_error))
             }
         }
     }
@@ -73,7 +74,7 @@ internal class LoginScreenViewModel(
             viewModelScope.launch {
                 resetUiState()
                 _uiState.value = LoginScreenUiState.Error(
-                    errorMessage = applicationContext.getString(R.string.empty_login)
+                    errorMessage = resourceProvider.getString(R.string.empty_login)
                 )
             }
             return false
@@ -83,7 +84,7 @@ internal class LoginScreenViewModel(
             viewModelScope.launch {
                 resetUiState()
                 _uiState.value = LoginScreenUiState.Error(
-                    errorMessage = applicationContext.getString(R.string.empty_password)
+                    errorMessage = resourceProvider.getString(R.string.empty_password)
                 )
             }
             return false

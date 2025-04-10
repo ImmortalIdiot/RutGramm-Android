@@ -1,12 +1,12 @@
 package screens.reset_password.new_password
 
-import android.content.Context
 import android.util.Patterns
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
-import domain.AuthStore
+import di.ResourceProvider
+import domain.AuthDataStore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class NewPasswordScreenViewModel(
-    private val applicationContext: Context
+    private val resourceProvider: ResourceProvider,
+    private val datastore: AuthDataStore
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<NewPasswordScreenUiState>(NewPasswordScreenUiState.Init)
     val uiState: StateFlow<NewPasswordScreenUiState> = _uiState.asStateFlow()
@@ -25,7 +26,7 @@ internal class NewPasswordScreenViewModel(
 
     init {
         viewModelScope.launch {
-            _email.value = AuthStore.Email loadEmailFromDataStore applicationContext
+            _email.value = datastore.loadEmailFromDataStore()
         }
     }
 
@@ -75,11 +76,11 @@ internal class NewPasswordScreenViewModel(
                     _uiState.value = NewPasswordScreenUiState.Success
                 } else if (result.isSuccess) {
                     _uiState.value = NewPasswordScreenUiState.Error(
-                        applicationContext.getString(R.string.smth_went_wrong_error)
+                        resourceProvider.getString(R.string.smth_went_wrong_error)
                     )
                 } else {
                     _uiState.value = NewPasswordScreenUiState.Error(
-                        applicationContext.getString(R.string.server_error)
+                        resourceProvider.getString(R.string.server_error)
                     )
                 }
             } else {
@@ -94,12 +95,12 @@ internal class NewPasswordScreenViewModel(
         confirmPassword: String,
     ): Boolean {
         val errorMessage = when {
-            email.isEmpty() -> applicationContext.getString(R.string.empty_email)
+            email.isEmpty() -> resourceProvider.getString(R.string.empty_email)
             !Patterns.EMAIL_ADDRESS.matcher(email)
-                .matches() -> applicationContext.getString(R.string.invalid_email)
+                .matches() -> resourceProvider.getString(R.string.invalid_email)
 
-            password.isEmpty() -> applicationContext.getString(R.string.empty_password)
-            password != confirmPassword -> applicationContext.getString(R.string.confirm_password_error)
+            password.isEmpty() -> resourceProvider.getString(R.string.empty_password)
+            password != confirmPassword -> resourceProvider.getString(R.string.confirm_password_error)
             else -> null
         }
 

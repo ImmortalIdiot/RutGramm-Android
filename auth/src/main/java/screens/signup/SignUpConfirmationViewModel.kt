@@ -1,18 +1,19 @@
 package screens.signup
 
-import android.content.Context
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.immortalidiot.auth.R
-import domain.AuthStore
+import di.ResourceProvider
+import domain.AuthDataStore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 internal class SignUpConfirmationViewModel(
-    private val applicationContext: Context
+    private val resourceProvider: ResourceProvider,
+    private val datastore: AuthDataStore
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<SignUpConfirmationUiState>(SignUpConfirmationUiState.Init)
     val uiState: StateFlow<SignUpConfirmationUiState> = _uiState.asStateFlow()
@@ -30,7 +31,7 @@ internal class SignUpConfirmationViewModel(
         var userId: String?
 
         viewModelScope.launch {
-            userId = AuthStore.UserId loadUserId applicationContext
+            userId = datastore.loadUserId()
 
             if (userId != null) {
                 val result = network.registration.verifyCode(code = code, userId = userId!!)
@@ -40,13 +41,13 @@ internal class SignUpConfirmationViewModel(
 
                     else -> {
                         SignUpConfirmationUiState.Error(
-                            message = applicationContext.getString(R.string.smth_went_wrong_error)
+                            message = resourceProvider.getString(R.string.smth_went_wrong_error)
                         )
                     }
                 }
             } else {
                 _uiState.value = SignUpConfirmationUiState.Error(
-                    applicationContext.getString(R.string.smth_went_wrong_error)
+                    resourceProvider.getString(R.string.smth_went_wrong_error)
                 )
             }
         }

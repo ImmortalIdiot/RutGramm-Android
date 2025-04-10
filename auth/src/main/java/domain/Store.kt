@@ -6,62 +6,67 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 
-internal object AuthStore {
-    private val KEY_USER_ID = stringPreferencesKey(name = "user_id")
-    private val KEY_ACCESS_TOKEN = stringPreferencesKey(name = "access_token")
-    private val KEY_REFRESH_TOKEN = stringPreferencesKey(name = "refresh_token")
+internal interface AuthDataStore {
+    suspend fun saveUserId(userId: String)
+    suspend fun loadUserId(): String?
 
-    private val EMAIL = stringPreferencesKey(name = "email")
+    suspend fun saveAuthData(data: AuthData)
+    suspend fun loadAuthData(): AuthData?
+
+    suspend fun saveEmailToDataStore(email: String)
+    suspend fun loadEmailFromDataStore(): String
+}
+
+internal class AuthDataStoreImpl(private val context: Context) : AuthDataStore {
+    private val userIdKey = stringPreferencesKey(name = "user_id")
+    private val accessTokenKey = stringPreferencesKey(name = "access_token")
+    private val refreshTokenKey = stringPreferencesKey(name = "refresh_token")
+
+    private val email = stringPreferencesKey(name = "email")
 
     private val Context.authDataStore by preferencesDataStore(name = "AuthData")
 
-    object UserId {
-        suspend fun saveUserId(context: Context, userId: String) {
-            context.authDataStore.edit {
-                it[KEY_USER_ID] = userId
-            }
-        }
-
-        suspend infix fun loadUserId(context: Context): String? {
-            val preferences = context.authDataStore.data.first()
-            return preferences[KEY_USER_ID]
+    override suspend fun saveUserId(userId: String) {
+        context.authDataStore.edit {
+            it[userIdKey] = userId
         }
     }
 
-    object Data {
-        suspend fun saveAuthData(context: Context, data: AuthData) {
-            context.authDataStore.edit {
-                it[KEY_USER_ID] = data.userId
-                it[KEY_ACCESS_TOKEN] = data.accessToken
-                it[KEY_REFRESH_TOKEN] = data.refreshToken
-            }
-        }
+    override suspend fun loadUserId(): String? {
+        val preferences = context.authDataStore.data.first()
+        return preferences[userIdKey]
+    }
 
-        suspend infix fun loadAuthData(context: Context): AuthData? {
-            val preferences = context.authDataStore.data.first()
-
-            val userId = preferences[KEY_USER_ID]
-            val accessToken = preferences[KEY_ACCESS_TOKEN]
-            val refreshToken = preferences[KEY_REFRESH_TOKEN]
-
-            return if (userId != null && accessToken != null && refreshToken != null) {
-                AuthData(userId, accessToken, refreshToken)
-            } else {
-                null
-            }
+    override suspend fun saveAuthData(data: AuthData) {
+        context.authDataStore.edit {
+            it[userIdKey] = data.userId
+            it[accessTokenKey] = data.accessToken
+            it[refreshTokenKey] = data.refreshToken
         }
     }
 
-    object Email {
-        suspend fun saveEmailToDataStore(context: Context, email: String) {
-            context.authDataStore.edit {
-                it[EMAIL] = email
-            }
-        }
+    override suspend fun loadAuthData(): AuthData? {
+        val preferences = context.authDataStore.data.first()
 
-        suspend infix fun loadEmailFromDataStore(context: Context): String {
-            val preferences = context.authDataStore.data.first()
-            return preferences[EMAIL] ?: ""
+        val userId = preferences[userIdKey]
+        val accessToken = preferences[accessTokenKey]
+        val refreshToken = preferences[refreshTokenKey]
+
+        return if (userId != null && accessToken != null && refreshToken != null) {
+            AuthData(userId, accessToken, refreshToken)
+        } else {
+            null
         }
+    }
+
+    override suspend fun saveEmailToDataStore(email: String) {
+        context.authDataStore.edit {
+            it[this.email] = email
+        }
+    }
+
+    override suspend fun loadEmailFromDataStore(): String {
+        val preferences = context.authDataStore.data.first()
+        return preferences[email] ?: ""
     }
 }
