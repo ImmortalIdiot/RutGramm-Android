@@ -226,7 +226,7 @@ private fun NewPasswordScreenComposable(viewModel: NewPasswordScreenViewModel) {
 
             Text(
                 modifier = Modifier.clickable {
-                    navigator push OtpScreen
+                    navigator.pop()
                 },
                 text = context.getString(R.string.go_back),
                 style = MaterialTheme.typography.bodyLarge

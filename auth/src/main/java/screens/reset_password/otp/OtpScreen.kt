@@ -179,7 +179,7 @@ private fun OtpScreenComposable(viewModel: OtpScreenViewModel) {
 
             Text(
                 modifier = Modifier.clickable {
-                    navigator push ResetPasswordScreen
+                    navigator.pop()
                 },
                 text = context.getString(R.string.go_back),
                 style = MaterialTheme.typography.bodyLarge

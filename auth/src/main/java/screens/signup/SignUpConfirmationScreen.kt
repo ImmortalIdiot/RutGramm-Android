@@ -176,7 +176,9 @@ private fun SignUpConfirmation(viewModel: SignUpConfirmationViewModel) {
             Spacer(modifier = Modifier.height(height = 8.dp))
 
             Text(
-                modifier = Modifier.clickable { navigator push SignUpScreen },
+                modifier = Modifier.clickable {
+                    navigator.pop()
+                },
                 text = context.getString(R.string.go_back),
                 style = MaterialTheme.typography.bodyLarge
             )

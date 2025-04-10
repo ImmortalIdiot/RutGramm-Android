@@ -133,7 +133,7 @@ private fun ResetPasswordScreenComposable(viewModel: ResetPasswordScreenViewMode
 
             Text(
                 modifier = Modifier.clickable {
-                    navigator push LoginScreen
+                    navigator.pop()
                 },
                 text = context.getString(R.string.go_back),
                 style = MaterialTheme.typography.bodyLarge
