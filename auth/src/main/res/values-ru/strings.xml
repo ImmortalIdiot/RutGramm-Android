@@ -1,0 +1,41 @@
+<resources>
+    <string name="sign_in_screen">Авторизация</string>
+    <string name="login_or_email_field">Логин/Почта</string>
+    <string name="login_field">Логин</string>
+    <string name="email_field">Почта</string>
+    <string name="password_field">Пароль</string>
+    <string name="confirm_password_field">Повторите пароль</string>
+    <string name="sign_in">Войти</string>
+
+    <string name="to_register">Зарегистрироваться</string>
+    <string name="to_reset_password">Восстановить пароль</string>
+
+    <string name="empty_login">Поле логина не должно быть пустым</string>
+    <string name="empty_password">Поле пароля не должно быть пустым</string>
+    <string name="empty_email">Поле email не должно быть пустым</string>
+    <string name="invalid_email">Некорректный email</string>
+    <string name="confirm_password_error">Пароли не совпадают</string>
+
+    <string name="sign_up_screen">Регистрация</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="to_sign_in">Есть аккаунт? Войти</string>
+
+    <string name="smth_went_wrong_error">Что-то пошло не так</string>
+    <string name="server_error">На сервере возникла ошибка. Попробуйте позднее</string>
+
+    <string name="successful_login">Успешный вход</string>
+    <string name="successful_signup">Успешная регистрация</string>
+    <string name="confirm_signup">Подтвердите регистрацию</string>
+    <string name="check_email">Код подтверждения отправлен на указанную почту. Проверьте её</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="go_back">Назад</string>
+
+    <string name="reset_password_screen">Восстановление пароля</string>
+    <string name="email_not_exists">Пользователя с такой почтой не существует</string>
+    <string name="send_code">Отправить код</string>
+    <string name="verify_code">Проверить код</string>
+    <string name="incorrect_code">Неверный код подтверждения</string>
+    <string name="input_new_password">Введите новый пароль</string>
+    <string name="password_changed">Пароль изменён</string>
+    <string name="reset">Сменить</string>
+</resources>

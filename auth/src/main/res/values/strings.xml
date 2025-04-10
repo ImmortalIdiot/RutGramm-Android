@@ -1,0 +1,41 @@
+<resources>
+    <string name="sign_in_screen">Sign in Screen</string>
+    <string name="login_or_email_field">Login/Email</string>
+    <string name="login_field">Login</string>
+    <string name="email_field">Email</string>
+    <string name="password_field">Password</string>
+    <string name="confirm_password_field">Confirm password</string>
+    <string name="sign_in">Sign In</string>
+
+    <string name="to_register">To sign up</string>
+    <string name="to_reset_password">To reset password</string>
+
+    <string name="empty_login">Login field must be not empty</string>
+    <string name="empty_password">Password field must be not empty</string>
+    <string name="empty_email">Email field must be not empty</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="confirm_password_error">Passwords are not equals</string>
+
+    <string name="sign_up_screen">Sign up Screen</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="to_sign_in">To sign in</string>
+
+    <string name="smth_went_wrong_error">Something went wrong</string>
+    <string name="server_error">An error occurred on the server. Try again later</string>
+
+    <string name="successful_login">Successful enter</string>
+    <string name="successful_signup">Successful registration</string>
+    <string name="confirm_signup">Confirm registration</string>
+    <string name="check_email">Confirmation code sent to the specified email. Check your email</string>
+    <string name="confirm">Confirm</string>
+    <string name="go_back">Go back</string>
+
+    <string name="reset_password_screen">Reset password</string>
+    <string name="email_not_exists">There is no user with this email</string>
+    <string name="send_code">Send code</string>
+    <string name="verify_code">Verify code</string>
+    <string name="incorrect_code">Incorrect verification code</string>
+    <string name="input_new_password">Enter the new password</string>
+    <string name="password_changed">The password has been changed</string>
+    <string name="reset">Reset</string>
+</resources>

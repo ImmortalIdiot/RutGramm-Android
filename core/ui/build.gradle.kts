@@ -35,11 +35,12 @@ dependencies {
 
     api(libs.androidx.core.ktx)
     api(libs.androidx.appcompat)
+    api(libs.androidx.lifecycle.viewmodel.compose)
 
     api(platform(libs.androidx.compose.bom))
     api(libs.androidx.ui)
     api(libs.androidx.ui.graphics)
     api(libs.androidx.ui.tooling)
     api(libs.androidx.material3)
-    implementation(libs.androidx.material.icons.extended)
+    api(libs.androidx.material.icons.extended)
 }
