@@ -38,16 +38,13 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
-        compose = true
         buildConfig = true
     }
 }
 
 dependencies {
     implementation(project(":core:ui"))
-
-    implementation(libs.voyager.navigator)
-    implementation(libs.voyager.transitions)
+    implementation(project(":navigation"))
 
     implementation(libs.koin.core)
     implementation(libs.koin.android)

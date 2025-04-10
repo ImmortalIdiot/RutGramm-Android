@@ -40,21 +40,19 @@ import components.bars.showMessage
 import org.koin.androidx.compose.koinViewModel
 import screens.login.LoginScreen
 
-internal class SignUpScreen(
-    private val modifier: Modifier
-) : Screen {
+internal object SignUpScreen : Screen {
+    private fun readResolve(): Any = SignUpScreen
+
     @Composable
     override fun Content() {
         val viewModel: SignUpScreenViewModel = koinViewModel()
-        SignUpScreenComposable(viewModel = viewModel, modifier = modifier)
+
+        SignUpScreenComposable(viewModel = viewModel)
     }
 }
 
 @Composable
-private fun SignUpScreenComposable(
-    viewModel: SignUpScreenViewModel,
-    modifier: Modifier
-) {
+private fun SignUpScreenComposable(viewModel: SignUpScreenViewModel) {
     val navigator = LocalNavigator.currentOrThrow
 
     val context = LocalContext.current
@@ -80,7 +78,7 @@ private fun SignUpScreenComposable(
 
         if (uiState is SignUpScreenUiState.Success) {
             snackbarHostState.showMessage(message = context.getString(R.string.check_email))
-            navigator push SignUpConfirmationScreen(modifier = modifier)
+            navigator push SignUpConfirmationScreen
         }
     }
 
@@ -92,7 +90,7 @@ private fun SignUpScreenComposable(
     }
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(vertical = 64.dp),
         contentAlignment = Alignment.Center
@@ -236,7 +234,7 @@ private fun SignUpScreenComposable(
             Spacer(modifier = Modifier.height(height = 8.dp))
 
             Text(
-                modifier = Modifier.clickable { navigator push LoginScreen(modifier = modifier) },
+                modifier = Modifier.clickable { navigator push LoginScreen },
                 text = context.getString(R.string.to_sign_in),
                 style = MaterialTheme.typography.bodyLarge
             )

@@ -37,21 +37,19 @@ import components.bars.TopSnackbar
 import components.bars.showMessage
 import org.koin.androidx.compose.koinViewModel
 
-internal class SignUpConfirmationScreen(
-    private val modifier: Modifier
-) : Screen {
+internal object SignUpConfirmationScreen : Screen {
+    private fun readResolve(): Any = SignUpConfirmationScreen
+
     @Composable
     override fun Content() {
         val viewModel: SignUpConfirmationViewModel = koinViewModel()
-        SignUpConfirmation(viewModel = viewModel, modifier = modifier)
+
+        SignUpConfirmation(viewModel = viewModel)
     }
 }
 
 @Composable
-private fun SignUpConfirmation(
-    viewModel: SignUpConfirmationViewModel,
-    modifier: Modifier
-) {
+private fun SignUpConfirmation(viewModel: SignUpConfirmationViewModel) {
     val navigator = LocalNavigator.currentOrThrow
 
     val context = LocalContext.current
@@ -75,7 +73,7 @@ private fun SignUpConfirmation(
     }
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(
                 vertical = 64.dp,
@@ -178,7 +176,7 @@ private fun SignUpConfirmation(
             Spacer(modifier = Modifier.height(height = 8.dp))
 
             Text(
-                modifier = Modifier.clickable { navigator push SignUpScreen(modifier = modifier) },
+                modifier = Modifier.clickable { navigator push SignUpScreen },
                 text = context.getString(R.string.go_back),
                 style = MaterialTheme.typography.bodyLarge
             )

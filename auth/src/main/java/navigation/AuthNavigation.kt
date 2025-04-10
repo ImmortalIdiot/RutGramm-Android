@@ -17,14 +17,8 @@ fun AuthNavigation() {
     val snackbarHostState = remember { SnackbarHostState() }
 
     CompositionLocalProvider(LocalSnackbarHostState provides snackbarHostState) {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Navigator(
-                LoginScreen(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues = innerPadding)
-                )
-            )
-        }
+        Navigator(screen = LoginScreen)
     }
 }
+
+

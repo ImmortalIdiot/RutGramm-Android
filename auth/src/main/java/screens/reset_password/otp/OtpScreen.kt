@@ -42,25 +42,19 @@ import org.koin.androidx.compose.koinViewModel
 import screens.reset_password.email.ResetPasswordScreen
 import screens.reset_password.new_password.NewPasswordScreen
 
-internal class OtpScreen(
-    private val modifier: Modifier
-) : Screen {
+internal object OtpScreen : Screen {
+    private fun readResolve(): Any = OtpScreen
+
     @Composable
     override fun Content() {
         val viewModel: OtpScreenViewModel = koinViewModel()
 
-        OtpScreenComposable(
-            modifier = modifier,
-            viewModel = viewModel
-        )
+        OtpScreenComposable(viewModel = viewModel)
     }
 }
 
 @Composable
-private fun OtpScreenComposable(
-    modifier: Modifier,
-    viewModel: OtpScreenViewModel
-) {
+private fun OtpScreenComposable(viewModel: OtpScreenViewModel) {
     val navigator = LocalNavigator.currentOrThrow
 
     val context = LocalContext.current
@@ -80,7 +74,7 @@ private fun OtpScreenComposable(
         }
 
         if (uiState is OtpScreenUiState.Success) {
-            navigator push NewPasswordScreen(modifier = modifier)
+            navigator push NewPasswordScreen
             viewModel.updateUiState()
         }
     }
@@ -93,7 +87,7 @@ private fun OtpScreenComposable(
     }
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(vertical = 64.dp),
         contentAlignment = Alignment.Center
@@ -185,9 +179,7 @@ private fun OtpScreenComposable(
 
             Text(
                 modifier = Modifier.clickable {
-                    navigator.push(
-                        ResetPasswordScreen(modifier = modifier)
-                    )
+                    navigator push ResetPasswordScreen
                 },
                 text = context.getString(R.string.go_back),
                 style = MaterialTheme.typography.bodyLarge

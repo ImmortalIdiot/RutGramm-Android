@@ -45,21 +45,19 @@ import org.koin.androidx.compose.koinViewModel
 import screens.reset_password.email.ResetPasswordScreen
 import screens.signup.SignUpScreen
 
-internal class LoginScreen(
-    private val modifier: Modifier
-) : Screen {
+internal object LoginScreen : Screen {
+    private fun readResolve(): Any = LoginScreen
+
     @Composable
     override fun Content() {
         val viewModel: LoginScreenViewModel = koinViewModel()
-        LoginScreenComposable(modifier = modifier, viewModel = viewModel)
+
+        LoginScreenComposable(viewModel = viewModel)
     }
 }
 
 @Composable
-private fun LoginScreenComposable(
-    modifier: Modifier,
-    viewModel: LoginScreenViewModel
-) {
+private fun LoginScreenComposable(viewModel: LoginScreenViewModel) {
     val navigator = LocalNavigator.currentOrThrow
 
     val context = LocalContext.current
@@ -94,7 +92,7 @@ private fun LoginScreenComposable(
     }
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(vertical = 64.dp),
         contentAlignment = Alignment.Center
@@ -177,7 +175,7 @@ private fun LoginScreenComposable(
             Text(
                 modifier = Modifier
                     .align(Alignment.End)
-                    .clickable { navigator push ResetPasswordScreen(modifier = modifier) },
+                    .clickable { navigator push ResetPasswordScreen },
                 text = context.getString(R.string.to_reset_password),
                 style = toAnotherScreenStyle
             )
@@ -208,7 +206,7 @@ private fun LoginScreenComposable(
 
             Text(
                 modifier = Modifier.clickable {
-                    navigator push SignUpScreen(modifier = modifier)
+                    navigator push SignUpScreen
                 },
                 text = context.getString(R.string.to_register),
                 style = toAnotherScreenStyle
@@ -221,5 +219,5 @@ private fun LoginScreenComposable(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 private fun LoginScreenPreview() {
-    LoginScreenComposable(modifier = Modifier.fillMaxSize(), viewModel = viewModel())
+    LoginScreenComposable(viewModel = viewModel())
 }

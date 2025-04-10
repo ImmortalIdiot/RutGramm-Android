@@ -41,25 +41,19 @@ import org.koin.androidx.compose.koinViewModel
 import screens.login.LoginScreen
 import screens.reset_password.otp.OtpScreen
 
-internal class NewPasswordScreen(
-    private val modifier: Modifier
-) : Screen {
+internal object NewPasswordScreen : Screen {
+    private fun readResolve(): Any = NewPasswordScreen
+
     @Composable
     override fun Content() {
         val viewModel: NewPasswordScreenViewModel = koinViewModel()
 
-        NewPasswordScreenComposable(
-            modifier = modifier,
-            viewModel = viewModel
-        )
+        NewPasswordScreenComposable(viewModel = viewModel)
     }
 }
 
 @Composable
-private fun NewPasswordScreenComposable(
-    modifier: Modifier,
-    viewModel: NewPasswordScreenViewModel
-) {
+private fun NewPasswordScreenComposable(viewModel: NewPasswordScreenViewModel) {
     val navigator = LocalNavigator.currentOrThrow
 
     val context = LocalContext.current
@@ -89,7 +83,7 @@ private fun NewPasswordScreenComposable(
 
         if (uiState is NewPasswordScreenUiState.Success) {
             snackbarHostState.showMessage(message = context.getString(R.string.password_changed))
-            navigator push LoginScreen(modifier = modifier)
+            navigator push LoginScreen
         }
     }
 
@@ -101,7 +95,7 @@ private fun NewPasswordScreenComposable(
     }
 
     Box(
-        modifier = modifier
+        modifier =  Modifier
             .fillMaxSize()
             .padding(vertical = 64.dp),
         contentAlignment = Alignment.Center
@@ -232,7 +226,7 @@ private fun NewPasswordScreenComposable(
 
             Text(
                 modifier = Modifier.clickable {
-                    navigator push OtpScreen(modifier = modifier)
+                    navigator push OtpScreen
                 },
                 text = context.getString(R.string.go_back),
                 style = MaterialTheme.typography.bodyLarge
