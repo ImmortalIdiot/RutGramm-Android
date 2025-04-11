@@ -88,5 +88,35 @@ internal val chats = listOf(
         "Google Cloud announces major computing boost with Ironwood chip, new hypercomputer upgrades",
         14,
         "https://i.abcnewsfe.com/a/e274162d-2de0-4937-a82c-32aaa82001de/abc_news_live-abc-ml-250210_1739199021469_hpMain_1x1.jpg"
-    )
+    ),
+
+    ChatPreviewModel(
+        "Games",
+        "Review: The last Campfire",
+        2,
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0_Q_rS1AYehFesDfUMMhOBn9UbAsJ3J6lkA&s"
+    ),
+
+    ChatPreviewModel(
+        "Now in Android",
+        "Hot reload in Compose!",
+        14,
+        "https://play-lh.googleusercontent.com/GGMK1gvjnXe-RLZb7G4l4_GtETDBRqzA0JG0v4NaS7Vrqwqsm_EIwJ58Gk598LgfKg"
+    ),
+
+    ChatPreviewModel(
+        "Kotlin Releases",
+        "New Kotlin version: 2.1.20. " +
+                "Since Kotlin 2.0.0, we ship the following types of releases:\n" +
+                "\n" +
+                "    Language releases (2. x. 0) that bring major changes in the language and include tooling updates. Released once in 6 months.\n" +
+                "\n" +
+                "    Tooling releases (2. x. 20) that are shipped between language releases and include updates in the tooling, performance improvements, and bug fixes. Released in 3 months after corresponding language release.\n" +
+                "\n" +
+                "    Bug fix releases (2. x. yz) that include bug fixes for tooling releases. There is no exact release schedule for these releases.\n" +
+                "\n" +
+                "For each language and tooling release, we also ship several preview (EAP) versions for you to try new features before they are released. See Early Access Preview for details",
+        14,
+        "https://mathiasfrohlich.gallerycdn.vsassets.io/extensions/mathiasfrohlich/kotlin/1.7.1/1581441165235/Microsoft.VisualStudio.Services.Icons.Default"
+    ),
 )
