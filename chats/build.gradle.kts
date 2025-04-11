@@ -44,14 +44,15 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
     implementation(project(":core:ui"))
     implementation(project(":navigation"))
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
 }
