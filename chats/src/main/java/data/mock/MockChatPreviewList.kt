@@ -2,8 +2,9 @@ package data.mock
 
 import data.model.ChatPreviewModel
 
-internal val chats = listOf(
+internal val chats = mutableListOf(
     ChatPreviewModel(
+        1,
         "ImmortalIdiot",
         "The last famous words",
         0,
@@ -11,6 +12,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        2,
         "Glebix",
         "Short sentence",
         1,
@@ -18,11 +20,13 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        3,
         "Alpha",
         "Say \"Hello, world\" and won't forget to put \";\"",
     ),
 
     ChatPreviewModel(
+        4,
         "Beta",
         "It was decided to make mock data to test the ui components",
         15,
@@ -30,11 +34,13 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        5,
         "The longest chat header title, consisting of nine words and one eighty four symbols.".uppercase(),
         "Say hello"
     ),
 
     ChatPreviewModel(
+        6,
         "One more the longest chat header title. It is really long, isn't it?",
         "Fruit basket",
         3,
@@ -42,6 +48,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        7,
         "The quick brown fox jumps over the lazy dog.",
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et varius augue. Vivamus vel viverra.",
         0,
@@ -49,6 +56,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        8,
         "You can lead a horse to water, but you can't make it drink",
         "Meaning: you can give a person the opportunity to do something, but it's pointless if they don't want to",
         6,
@@ -56,6 +64,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        9,
         "dessssss",
         "я не знаю",
         5,
@@ -63,6 +72,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        10,
         "Seller",
         "yes",
         0,
@@ -70,6 +80,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        11,
         "Imperia",
         "Impossible quest",
         0,
@@ -77,6 +88,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        12,
         "Мой город",
         "Удивительно, но сегодня никого не убили",
         22,
@@ -84,6 +96,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        13,
         "News",
         "Google Cloud announces major computing boost with Ironwood chip, new hypercomputer upgrades",
         14,
@@ -91,6 +104,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        14,
         "Games",
         "Review: The last Campfire",
         2,
@@ -98,6 +112,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        15,
         "Now in Android",
         "Hot reload in Compose!",
         14,
@@ -105,6 +120,7 @@ internal val chats = listOf(
     ),
 
     ChatPreviewModel(
+        16,
         "Kotlin Releases",
         "New Kotlin version: 2.1.20. " +
                 "Since Kotlin 2.0.0, we ship the following types of releases:\n" +
