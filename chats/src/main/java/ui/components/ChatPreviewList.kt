@@ -18,9 +18,10 @@ import data.model.ChatPreviewModel
 @Composable
 internal fun ChatPreviewList(
     chats: List<ChatPreviewModel>,
-    onChatPreviewClick: (ChatPreviewModel) -> Unit
+    onChatPreviewClick: (ChatPreviewModel) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(modifier = modifier.fillMaxSize()) {
         itemsIndexed(chats) { index, chat ->
             Column(
                 modifier = Modifier.clickable {
@@ -36,7 +37,7 @@ internal fun ChatPreviewList(
 
                 if (index < chats.size - 1) {
                     HorizontalDivider(
-                        thickness = 2.dp,
+                        thickness = 1.dp,
                         color = Color.Gray
                     )
                 }
