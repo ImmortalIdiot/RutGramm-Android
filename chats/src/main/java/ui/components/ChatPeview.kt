@@ -92,12 +92,7 @@ private fun ChatPreviewContent(
     avatar: @Composable () -> Unit,
 ) {
 
-    // TODO: replace this when it becomes possible to change the theme
-    val badgeColor = if (isSystemInDarkTheme()) {
-        Color(144, 213, 255)
-    } else {
-        Color.Blue
-    }
+    val badgeColor = Color(144, 213, 255)
 
     Row(
         modifier = Modifier
