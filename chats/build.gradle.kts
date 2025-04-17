@@ -53,6 +53,8 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":navigation"))
 
+    implementation(libs.androidx.compose.foundation)
+
     implementation(libs.coil.compose)
     implementation(libs.coil.network)
 }
